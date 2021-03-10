@@ -33,5 +33,19 @@ def send_message(sender_id, recipient_id):
 @router.route("/message/<int:message_id>")
 @secure_route
 def delete_message(message_id):
-    message = Message.query.get(message_id):
-    if 
+    message = Message.query.get(message_id)
+    if message.user != g.current_user:
+        return { 'messages': 'Unauthorized' }, 401
+    message.remove()
+    return { "messages": "Message deleted!" }, 200
+
+@router.route("/message/<int:message_id>")
+@secure_route
+def edit_message(message_id):
+    existing_message = Message.query.get(message_id)
+    message_dict = request.json
+    if existing_message.user != g.current_user:
+        return { 'messages': 'Unauthorized' }, 401
+    message = message_schema.load(message_dict, instance=existing_message, partial=True)
+    message.save()
+    return message_schema.jsonify(message), 200

@@ -37,8 +37,18 @@ def get_user_profile(user_id):
     user = User.query.get(user_id)
     return user_schema.jsonify(user), 200
 
+@router.route("/profile", methods=['DELETE'])
+@secure_route
+def delete_profile():
+    user = User.query.get(g.current_user.id)
+    user.remove()
+    return { "messages": "Profile deleted!" }, 200
 
-delete profile
-
-edit profile
-
+@router.route("/profile", methods=['PUT'])
+@secure_route
+def edit_profile():
+    existing_user = User.query.get(g.current_user.id)
+    user_dict = request.json
+    user = user_schema.load(user_dict, instance=existing_user, partial=True)
+    user.save()
+    return user_schema.jsonify(user), 200
