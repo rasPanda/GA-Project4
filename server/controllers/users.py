@@ -1,0 +1,44 @@
+# pylint: disable=import-error
+from flask import Blueprint, request, g
+from models.user import User
+from serializers.user import UserSchema
+from decorators.secure_route import secure_route
+
+user_schema = UserSchema()
+
+router = Blueprint(__name__, "users")
+
+@router.route("/register", methods=["POST"])
+def register():
+    user = user_schema.load(request.json)
+    user.save()
+    return user_schema.jsonify(user), 201
+
+
+@router.route("/login", methods=["GET"])
+def login():
+    user = User.query.filter_by(email=request.json['email']).first()
+    if not user:
+        return { 'messages': 'No player found' }
+    if not user.validate_password(request.json['password']):
+        return { 'messages': 'Incorrect password' }, 402
+    token = user.generate_token()
+    return { 'token': token, 'messages': f'Welcome back {user.username}!' }
+
+
+@router.route('/profile', methods=['GET'])
+@secure_route
+def get_own_profile():
+    return user_schema.jsonify(g.current_user), 200
+
+@router.route('/profile/<int:user_id>', methods=['GET'])
+@secure_route
+def get_user_profile(user_id):
+    user = User.query.get(user_id)
+    return user_schema.jsonify(user), 200
+
+
+delete profile
+
+edit profile
+
