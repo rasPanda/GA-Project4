@@ -9,9 +9,8 @@ board_schema = BoardSchema()
 router = Blueprint(__name__, "boards")
 
 @router.route("/board", methods=["GET"])
+@secure_route
 def get_user_boards():
-    user_id = g.current_user.id
-    print('hello' + user_id)
     boards = Board.query.filter_by(user_id=g.current_user.id)
     return board_schema.jsonify(boards, many=True), 200
 

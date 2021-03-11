@@ -1,17 +1,19 @@
 # pylint: disable=import-error
 from flask import Blueprint, request, g
 from models.product import Product
-from serializers.product import ProductSchema
+from models.board import Board
+from serializers.product import ProductSchema, SimpleProductSchema
 from decorators.secure_route import secure_route
 
 product_schema = ProductSchema()
+simple_product_schema = SimpleProductSchema()
 
 router = Blueprint(__name__, "products")
 
 @router.route("/product", methods=["GET"])
 def get_all_products():
     products = Product.query.all()
-    return product_schema.jsonify(products, many=True), 200
+    return simple_product_schema.jsonify(products, many=True), 200
 
 @router.route("/product/<int:product_id>", methods=["GET"])
 def get_single_product(product_id):
@@ -49,3 +51,11 @@ def delete_product(product_id):
         return { "messages": "Unauthorized" }, 401
     product.remove()
     return { "messages": "Product successfully deleted" }, 200
+
+
+@router.route("/product/<int:product_id>/board<int:board_id>", methods=["POST"])
+@secure_route
+def add_product_to_board(product_id, board_id):
+    product = Product.query.get(product_id)
+    board = Board.query.get(board_id)
+    board.products.append(product)

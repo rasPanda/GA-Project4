@@ -12,3 +12,11 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 
     password = fields.String(required=True)
     boards = fields.Nested('BoardSchema', many=True)
+    following = fields.Nested('SimpleUserSchema', many=True)
+
+class SimpleUserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        load_instance = True
+        exclude = ('password_hash', 'role', 'email', 'image')
+        load_only = ('email, password')

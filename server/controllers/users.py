@@ -55,3 +55,21 @@ def edit_profile():
     user = user_schema.load(user_dict, instance=existing_user, partial=True)
     user.save()
     return user_schema.jsonify(user), 200
+
+@router.route("/follow/<int:user_id>", methods=["POST"])
+@secure_route
+def follow(user_id):
+    user_to_follow = User.query.get(user_id)
+    if user_to_follow in g.current_user.following:
+        return { "messages": "Already following" }, 400
+    g.current_user.following.append(user_to_follow)
+    return { "messages": f"{user_to_follow.username} followed!" }, 201
+
+@router.route("/follow/<int:user_id>", methods=["DELETE"])
+@secure_route
+def unfollow(user_id):
+    user_to_unfollow = User.query.get(user_id)
+    if user_to_unfollow not in g.current_user.following:
+        return { "messages": "Not following" }, 400
+    g.current_user.following.remove(user_to_unfollow)
+    return { "messages": f"{user_to_unfollow.username} unfollowed!" }, 200

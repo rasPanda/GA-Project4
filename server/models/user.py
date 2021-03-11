@@ -11,6 +11,7 @@ import jwt
 from datetime import *
 from config.environment import secret
 
+
 def validate_password_strength(password_plaintext):
     assert len(password_plaintext) >= 8, "Password too short"
     return { "messages": "Invalid password" }, 400

@@ -18,6 +18,4 @@ def assertion_error(e):
 
 @app.errorhandler(AttributeError)
 def attribute_error(e):
-    if "current_user" in str(e):
-        return { "messages": "Not logged in!" }, 400
     return { "errors": str(e), "messages": "Something went wrong" }, 400
