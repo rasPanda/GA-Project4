@@ -5,6 +5,7 @@ from serializers.board import BoardSchema
 from decorators.secure_route import secure_route
 
 board_schema = BoardSchema()
+# user_boards_schema = UserBoardsSchema()
 
 router = Blueprint(__name__, "boards")
 

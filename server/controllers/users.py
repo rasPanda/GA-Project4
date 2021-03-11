@@ -56,6 +56,7 @@ def edit_profile():
     user.save()
     return user_schema.jsonify(user), 200
 
+
 @router.route("/follow/<int:user_id>", methods=["POST"])
 @secure_route
 def follow(user_id):
@@ -68,6 +69,7 @@ def follow(user_id):
     user.following.append(user_to_follow)
     user.save()
     return { "messages": f"{user_to_follow.username} followed!" }, 201
+
 
 @router.route("/follow/<int:user_id>", methods=["DELETE"])
 @secure_route

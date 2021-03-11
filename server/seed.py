@@ -19,8 +19,8 @@ with app.app_context():
         db.session.commit()
         db.session.add_all(list_comments)
         db.session.commit()
-        # db.session.add_all(list_messages)
-        # db.session.commit()
+        db.session.add_all(list_messages)
+        db.session.commit()
         
         print('🤖 Database seeded! 🤖')
         

@@ -27,9 +27,8 @@ class User(db.Model, BaseModel):
     password_hash = db.Column(db.String(128), nullable=True)
     products = db.relationship('Product', backref='user')
     boards = db.relationship('Board', backref='user', cascade='all, delete')
-    # messages = db.relationship('Message', backref='user', cascade='all, delete')
-    # follows = db.relationship('User', backref='user', cascade='all, delete')
-    # following = db.relationship('User', backref='users', cascade='all, delete')
+    messages_sent = db.relationship('Message', backref='sender', lazy='dynamic', foreign_keys = 'Message.sender_id', cascade='all, delete')
+    messages_received = db.relationship('Message', backref='recipient', lazy='dynamic', foreign_keys = 'Message.recipient_id', cascade='all, delete')
     following = db.relationship(
         'User', lambda: user_following,
         primaryjoin=lambda: User.id == user_following.c.user_id,
