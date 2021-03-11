@@ -1,9 +1,9 @@
 # pylint: disable=no-member
 from app import app, db
 from data.product_data import list_products
-from data.user_data import list_users
 from data.comment_data import list_comments
 from data.message_data import list_messages
+from data.user_data import list_users
 
 with app.app_context():
 

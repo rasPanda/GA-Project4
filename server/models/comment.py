@@ -1,6 +1,7 @@
 # pylint: disable=import-error
 from app import db
 from models.base import BaseModel
+from models.product import Product
 
 class Comment(db.Model, BaseModel):
     

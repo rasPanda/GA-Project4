@@ -1,8 +1,8 @@
 # pylint: disable=import-error
 from app import ma
-from models.messages import messages
+from models.message import Message
 
 class MessageSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = messages
+        model = Message
         load_instance = True

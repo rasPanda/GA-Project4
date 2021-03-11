@@ -1,6 +1,6 @@
 # pylint: disable=import-error
 from app import ma
-from models.hero import Product
+from models.product import Product
 from marshmallow import fields
 
 class ProductSchema(ma.SQLAlchemyAutoSchema):

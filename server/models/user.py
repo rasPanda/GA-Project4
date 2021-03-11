@@ -20,8 +20,8 @@ class User(db.Model, BaseModel):
     role = db.Column(db.Enum('normal', 'admin', name='access_types'), default='normal')
     password_hash = db.Column(db.String(128), nullable=True)
 
-    messages = db.relationship('Message', backref='user', cascade='all, delete')
     products = db.relationship('Product', backref='user')
+    messages = db.relationship('Message', backref='user', cascade='all, delete')
     follows = db.relationship('User', backref='user', cascade='all, delete')
     following = db.relationship('User', backref='users', cascade='all, delete')
 
