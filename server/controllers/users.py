@@ -31,11 +31,13 @@ def login():
 def get_own_profile():
     return user_schema.jsonify(g.current_user), 200
 
+
 @router.route('/profile/<int:user_id>', methods=['GET'])
 @secure_route
 def get_user_profile(user_id):
     user = User.query.get(user_id)
     return user_schema.jsonify(user), 200
+
 
 @router.route("/profile", methods=['DELETE'])
 @secure_route
@@ -43,6 +45,7 @@ def delete_profile():
     user = User.query.get(g.current_user.id)
     user.remove()
     return { "messages": "Profile deleted!" }, 200
+
 
 @router.route("/profile", methods=['PUT'])
 @secure_route

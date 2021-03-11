@@ -2,13 +2,14 @@
 from models.board import Board
 from data.product_data import list_products
 
-board_1 = Board(
+list_boards = [
+    Board(
         name="New flat",
         user_id=1,
         products=list_products
-    )
-
-board_2 = Board(
+    ),
+    Board(
         name="Bedroom redecoration",
         user_id=1,
     )
+]

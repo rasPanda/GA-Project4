@@ -4,6 +4,7 @@ from models.base import BaseModel
 from models.product import Product
 from models.message import Message
 from models.board import Board
+from models.user_following_join import user_following
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 import jwt
@@ -13,6 +14,7 @@ from config.environment import secret
 def validate_password_strength(password_plaintext):
     assert len(password_plaintext) >= 8, "Password too short"
     return { "messages": "Invalid password" }, 400
+
 
 class User(db.Model, BaseModel):
 
@@ -27,6 +29,12 @@ class User(db.Model, BaseModel):
     # messages = db.relationship('Message', backref='user', cascade='all, delete')
     # follows = db.relationship('User', backref='user', cascade='all, delete')
     # following = db.relationship('User', backref='users', cascade='all, delete')
+    following = db.relationship(
+        'User', lambda: user_following,
+        primaryjoin=lambda: User.id == user_following.c.user_id,
+        secondaryjoin=lambda: User.id == user_following.c.following_id,
+        backref='followers'
+    )
 
 
     @hybrid_property
