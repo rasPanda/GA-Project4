@@ -20,7 +20,7 @@ class Product(db.Model, BaseModel):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"))
 
     comments = db.relationship('Comment', backref='product', cascade='all, delete')
-    boards = db.relationship('Spell', backref='heroes', secondary=products_boards_join)
+    boards = db.relationship('Spell', backref='product', secondary=products_boards_join)
 
     @validates('dest_url')
     def validate_dest_url(self, key, url):

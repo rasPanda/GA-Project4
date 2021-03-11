@@ -1,6 +1,5 @@
 # pylint: disable=import-error
 from models.product import Product
-from data.board_data import list_boards
 
 list_products = [
     Product(
@@ -11,7 +10,7 @@ list_products = [
         price="649.00",
         dest_url="https://www.made.com/wingrove-8-10-seat-extending-dining-table-french-oak",
         description="Wingrove 8-10 Seat Extending Dining Table, French Oak",
-        user_id=1,
+        user_id=1
     ),
     Product(
         name="John Lewis & Partners Scandi Sketch Stripe Rug, Grey at John Lewis & Partners",
@@ -21,7 +20,7 @@ list_products = [
         price="280.00",
         dest_url="https://www.johnlewis.com/john-lewis-partners-scandi-sketch-stripe-rug-grey/p3178122",
         description="Buy John Lewis & Partners Scandi Sketch Stripe Rug, Grey from our Rugs range at John Lewis & Partners. Free Delivery on orders over £50.",
-        user_id=1,
+        user_id=1
     ),
     Product(
         name="TOFTBYN Decorate kit 11 - IKEA",
@@ -51,7 +50,7 @@ list_products = [
         price="157.99",
         dest_url="https://www.wayfair.co.uk/furniture/pdp/george-oliver-grant-console-table-last1690.html",
         description="Top this timeless 3-drawer console table with an elegant vase and antique tomes for a lovely foyer vignette, or layout homemade treats and serveware for a charming dessert display at your next dinner party.",
-        user_id=2,
+        user_id=2
     ),
     Product(
         name="Cube module range - Quadro sheesham 3 drawer furniture - Tikamoon ",
@@ -61,6 +60,6 @@ list_products = [
         price="157.99",
         dest_url="https://www.tikamoon.co.uk/art-kwarto-solid-sheesham-cube-3-drawers-1513.htm",
         description="Tikamoon : Kwarto solid sheesham Cube 3 Drawers",
-        user_id=2,
+        user_id=2
     ),
 ]

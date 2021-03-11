@@ -3,15 +3,18 @@ from models.comment import Comment
 
 list_comments = [
     Comment(
-        content="So lovely!",
+        text="So lovely!",
         product_id=1,
+        user_id=2,
     ),
         Comment(
-        content="Must buy",
+        text="Must buy",
         product_id=1,
+        user_id=2,
     ),
         Comment(
-        content="Not for me!",
+        text="Not for me!",
         product_id=2,
+        user_id=2,
     ),
 ]

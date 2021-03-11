@@ -20,10 +20,10 @@ class User(db.Model, BaseModel):
     role = db.Column(db.Enum('normal', 'admin', name='access_types'), default='normal')
     password_hash = db.Column(db.String(128), nullable=True)
 
-    messages = db.relationship('messages', backref='user', cascade='all, delete')
-    products = db.relationship('Hero', backref='user')
+    messages = db.relationship('Message', backref='user', cascade='all, delete')
+    products = db.relationship('Product', backref='user')
     follows = db.relationship('User', backref='user', cascade='all, delete')
-    following = db.relationship('Hero', backref='users', cascade='all, delete')
+    following = db.relationship('User', backref='users', cascade='all, delete')
 
     @hybrid_property
     def password(self):
