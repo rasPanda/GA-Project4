@@ -2,6 +2,7 @@
 from app import app, db
 from data.product_data import list_products
 from data.comment_data import list_comments
+from data.board_data import board_1, board_2
 from data.message_data import list_messages
 from data.user_data import list_users
 
@@ -14,10 +15,13 @@ with app.app_context():
         db.session.commit()
         db.session.add_all(list_products)
         db.session.commit()
+        db.session.add(board_1)
+        db.session.add(board_2)
+        db.session.commit()
         db.session.add_all(list_comments)
         db.session.commit()
-        db.session.add_all(list_messages)
-        db.session.commit()
+        # db.session.add_all(list_messages)
+        # db.session.commit()
         
         print('🤖 Database seeded! 🤖')
         

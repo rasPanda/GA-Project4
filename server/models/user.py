@@ -1,6 +1,9 @@
 # pylint: disable=import-error, unused-wildcard-import
 from app import db, bcrypt
 from models.base import BaseModel
+from models.product import Product
+from models.message import Message
+from models.board import Board
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 import jwt
@@ -19,11 +22,12 @@ class User(db.Model, BaseModel):
     image = db.Column(db.Text, nullable=False, default='images/default_user_pic.png')
     role = db.Column(db.Enum('normal', 'admin', name='access_types'), default='normal')
     password_hash = db.Column(db.String(128), nullable=True)
-
     products = db.relationship('Product', backref='user')
-    messages = db.relationship('Message', backref='user', cascade='all, delete')
-    follows = db.relationship('User', backref='user', cascade='all, delete')
-    following = db.relationship('User', backref='users', cascade='all, delete')
+    boards = db.relationship('Board', backref='user', cascade='all, delete')
+    # messages = db.relationship('Message', backref='user', cascade='all, delete')
+    # follows = db.relationship('User', backref='user', cascade='all, delete')
+    # following = db.relationship('User', backref='users', cascade='all, delete')
+
 
     @hybrid_property
     def password(self):
