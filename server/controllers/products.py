@@ -3,10 +3,12 @@ from flask import Blueprint, request, g
 from models.product import Product
 from models.board import Board
 from serializers.product import ProductSchema, SimpleProductSchema
+from serializers.board import BoardSchema
 from decorators.secure_route import secure_route
 
 product_schema = ProductSchema()
 simple_product_schema = SimpleProductSchema()
+board_schema = BoardSchema()
 
 router = Blueprint(__name__, "products")
 
@@ -58,4 +60,19 @@ def delete_product(product_id):
 def add_product_to_board(product_id, board_id):
     product = Product.query.get(product_id)
     board = Board.query.get(board_id)
+    if product in board.products:
+        return { "messages": "Product already on board" }, 400
     board.products.append(product)
+    board.save()
+    return board_schema.jsonify(board), 200
+
+@router.route("/product/<int:product_id>/board<int:board_id>", methods=["DELETE"])
+@secure_route
+def remove_product_from_board(product_id, board_id):
+    product = Product.query.get(product_id)
+    board = Board.query.get(board_id)
+    if product not in board.products:
+        return { "messages": "Product not found" }, 404
+    board.products.remove(product)
+    board.save()
+    return board_schema.jsonify(board), 200

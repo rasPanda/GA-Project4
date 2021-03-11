@@ -59,17 +59,25 @@ def edit_profile():
 @router.route("/follow/<int:user_id>", methods=["POST"])
 @secure_route
 def follow(user_id):
+    user = g.current_user
     user_to_follow = User.query.get(user_id)
-    if user_to_follow in g.current_user.following:
+    if user == user_to_follow:
+        return { "messages": "Can't follow yourself!" }, 400
+    if user_to_follow in user.following:
         return { "messages": "Already following" }, 400
-    g.current_user.following.append(user_to_follow)
+    user.following.append(user_to_follow)
+    user.save()
     return { "messages": f"{user_to_follow.username} followed!" }, 201
 
 @router.route("/follow/<int:user_id>", methods=["DELETE"])
 @secure_route
 def unfollow(user_id):
+    user = g.current_user
     user_to_unfollow = User.query.get(user_id)
-    if user_to_unfollow not in g.current_user.following:
-        return { "messages": "Not following" }, 400
-    g.current_user.following.remove(user_to_unfollow)
+    if user == user_to_unfollow:
+        return { "messages": "Can't unfollow yourself!" }, 400
+    if user_to_unfollow not in user.following:
+        return { "messages": "Not following" }, 404
+    user.following.remove(user_to_unfollow)
+    user.save()
     return { "messages": f"{user_to_unfollow.username} unfollowed!" }, 200
