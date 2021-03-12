@@ -1,11 +1,12 @@
 # pylint: disable=import-error
+from app import db
 from flask import Blueprint, request, g
 from models.board import Board
+from models.products_boards import Products_Boards
 from serializers.board import BoardSchema
 from decorators.secure_route import secure_route
 
 board_schema = BoardSchema()
-# user_boards_schema = UserBoardsSchema()
 
 router = Blueprint(__name__, "boards")
 
@@ -60,3 +61,18 @@ def delete_board(board_id):
         return { 'messages': 'Unauthorized' }, 401
     board.remove()
     return { "messages": "Board successfully deleted" }, 200
+
+
+@router.route("/product/<int:product_id>/board<int:board_id>", methods=["PUT"])
+@secure_route
+def mark_product_purchased(product_id, board_id):
+    board = Board.query.get(board_id)
+    if board.user != g.current_user:
+        return { 'messages': 'Unauthorized' }, 401
+    product_to_toggle = Products_Boards.query.filter_by(product_id=product_id, board_id=board_id).first()
+    if not product_to_toggle:
+        return { "messages": "Product not on board" }, 400
+    product_to_toggle.purchased = not product_to_toggle.purchased
+    db.session.add(product_to_toggle)
+    db.session.commit()
+    return board_schema.jsonify(board), 200

@@ -8,7 +8,8 @@ class BoardSchema(ma.SQLAlchemyAutoSchema):
         model = Board
         load_instance = True
 
-    products = fields.Nested('SimpleProductSchema', many=True)
+    products = fields.Nested('ProductBoardSchema', many=True)
+
 
 class SimpleBoardSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
