@@ -6,7 +6,6 @@ list_boards = [
     Board(
         name="New flat",
         user_id=1,
-        products=list_products
     ),
     Board(
         name="Bedroom redecoration",

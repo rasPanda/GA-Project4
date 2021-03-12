@@ -1,7 +1,7 @@
 # pylint: disable=import-error
 from app import db
 from models.base import BaseModel
-from models.products_boards import products_boards_join
+# from models.products_boards import Products_Boards
 from models.board import Board
 from models.comment import Comment
 from sqlalchemy.orm import validates
@@ -20,7 +20,6 @@ class Product(db.Model, BaseModel):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"))
 
     comments = db.relationship('Comment', backref='product', cascade='all, delete')
-    boards = db.relationship('Board', backref='products', secondary=products_boards_join)
 
     @validates('dest_url')
     def validate_dest_url(self, key, url):
