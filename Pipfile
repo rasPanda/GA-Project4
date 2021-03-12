@@ -16,6 +16,7 @@ pyjwt = "*"
 black = "*"
 pytest = "*"
 datetime = "*"
+gazpacho = "*"
 
 [requires]
 python_version = "3.9"
