@@ -1,12 +1,13 @@
 # pylint: disable=import-error
-from flask import Blueprint
+from flask import Blueprint, request
 from gazpacho import get, Soup
 
 router = Blueprint(__name__, "scraper")
 
 @router.route("/scrape", methods=["GET"])
 def scrape():
-    html = get('https://www.made.com/julius-set-of-2-velvet-cushions-45-x-45cm-forest-green')
+    url = request.args.get('url')
+    html = get(url)
     soup = Soup(html)
 
     name = (soup.find('meta', attrs={'property': "og:title"}, mode='first'))
@@ -47,10 +48,7 @@ def scrape():
         if vendor != None:
             vendor = vendor.attrs['content']
 
-    # print(description)
-    # print(image)
-    # print(price)
-    # print(site_name)
+
     return {
         "name": name if name != None else '',
         "description": description if description != None else '',
