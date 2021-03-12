@@ -25,10 +25,13 @@ class User(db.Model, BaseModel):
     image = db.Column(db.Text, nullable=False, default='images/default_user_pic.png')
     role = db.Column(db.Enum('normal', 'admin', name='access_types'), default='normal')
     password_hash = db.Column(db.String(128), nullable=True)
+
     products = db.relationship('Product', backref='user')
     boards = db.relationship('Board', backref='user', cascade='all, delete')
+
     messages_sent = db.relationship('Message', backref='sender', lazy='dynamic', foreign_keys = 'Message.sender_id', cascade='all, delete')
     messages_received = db.relationship('Message', backref='recipient', lazy='dynamic', foreign_keys = 'Message.recipient_id', cascade='all, delete')
+    
     following = db.relationship(
         'User', lambda: user_following,
         primaryjoin=lambda: User.id == user_following.c.user_id,
