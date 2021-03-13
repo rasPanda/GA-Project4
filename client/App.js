@@ -23,7 +23,7 @@ const Home = () => <Link to={'/test/backend'}>
 const TestBackend = () => {
   useEffect(() => {
     // ? This is going to try localhost:5000/api
-    axios.get('/api')
+    axios.get('/api/product')
       .then(({ data }) => console.log(data))
   }, [])
 
