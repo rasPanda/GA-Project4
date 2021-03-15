@@ -26,6 +26,13 @@ def get_single_product(product_id):
         return { 'messages': 'Product not found' }, 404
     return product_schema.jsonify(product), 200
 
+@router.route("/product/search")
+def search_product_by_url():
+    url = request.args.get('url')
+    product = Product.query.filter_by(dest_url=url).first()
+    if not product:
+        return { 'messages': 'No duplicate' }, 200
+    return product_schema.jsonify(product), 200
 
 @router.route("/product", methods=["POST"])
 @secure_route
@@ -73,7 +80,7 @@ def add_product_to_board(product_id, board_id):
 
 @router.route("/product/<int:product_id>/board<int:board_id>", methods=["DELETE"])
 @secure_route
-def remove_product_to_board(product_id, board_id):
+def remove_product_from_board(product_id, board_id):
     board = Board.query.get(board_id)
     if board.user != g.current_user:
         return { 'messages': 'Unauthorized' }, 401

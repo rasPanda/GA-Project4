@@ -4,16 +4,29 @@ import axios from 'axios'
 
 export default function Board({ match }) {
   const boardId = match.params.id
+  const [loading, updateLoading] = useState(true)
   const [board, getBoard] = useState({})
 
   useEffect(() => {
-    axios.get(`/api/board/${boardId}`)
-      .then(res => {
-        getBoard(res.data)
-      })
+    async function fetchBoard() {
+      await axios.get(`/api/board/${boardId}`)
+        .then(res => {
+          getBoard(res.data)
+        })
+      updateLoading(false)
+    }
+    fetchBoard()
   }, [])
 
-  if (!Object.keys(board).length) {
+  if (loading) {
+    return <main>
+      <div>
+        Loading board
+      </div>
+    </main>
+  }
+
+  if (!loading && !Object.keys(board).length) {
     return <main>
       <div>nothing here!</div>
     </main>
@@ -28,7 +41,7 @@ export default function Board({ match }) {
       state: {
         boardId: boardId
       }
-    }}><button type='button'>Add item</button></Link>
+    }}><button type='button'>Add item to this list</button></Link>
     <section>
       {board.products.map((product) => {
         return <section key={product.product.id}>

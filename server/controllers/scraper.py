@@ -55,5 +55,5 @@ def scrape():
         "image": image if image != None else '',
         "price": price if price != None else '',
         "vendor": vendor if vendor != None else '',
-        "url": url
+        "dest_url": url
         }, 200
