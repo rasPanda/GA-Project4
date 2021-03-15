@@ -21,7 +21,7 @@ export default function Board({ match }) {
   if (loading) {
     return <main>
       <div>
-        Loading board
+        Loading list
       </div>
     </main>
   }
@@ -51,14 +51,18 @@ export default function Board({ match }) {
             null}
           <div>£{product.product.price}</div>
           <div>{product.product.vendor}</div>
-          <Link to={`/product/${product.product.id}`}>
+          <Link to={{
+            pathname: `/product/${product.product.id}`,
+            state: {
+              boardId: boardId,
+              purchased: product.purchased
+            }
+          }}>
             <h4>{product.product.name}</h4>
             <img width='100%' src={product.product.image} alt={product.product.name} />
           </Link>
         </section>
-
-      })
-      }
+      })}
     </section>
   </main>
 }

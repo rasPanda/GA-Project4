@@ -28,6 +28,7 @@ class User(db.Model, BaseModel):
 
     products = db.relationship('Product', backref='user')
     boards = db.relationship('Board', backref='user', cascade='all, delete')
+    comments = db.relationship('Comment', backref='user')
 
     messages_sent = db.relationship('Message', backref='sender', lazy='dynamic', foreign_keys = 'Message.sender_id', cascade='all, delete')
     messages_received = db.relationship('Message', backref='recipient', lazy='dynamic', foreign_keys = 'Message.recipient_id', cascade='all, delete')

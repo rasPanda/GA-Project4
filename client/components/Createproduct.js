@@ -174,21 +174,5 @@ export default function CreateProduct({ history, location }) {
         {errors && <div>{errors}</div>}
       </form>
     }
-
-    {/* <button type='button' onClick={() => window.history.back()}>Cancel</button>
-    <form onSubmit={handleSubmit}>
-      <h2>Create a new list</h2>
-      <div>
-        <label>List name</label>
-        <input 
-          type='text'
-          value={boardName}
-          onChange={handleChange}
-          name='listName'
-          placeholder='My new list'
-        />
-      </div>
-      <button>Create list</button>
-    </form> */}
   </main>
 }

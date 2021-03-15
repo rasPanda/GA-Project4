@@ -10,7 +10,7 @@ import Register from './components/Register'
 import CreateBoard from './components/CreateBoard'
 import Board from './components/Board'
 import CreateProduct from './components/CreateProduct'
-// import Product from './components/Product'
+import Product from './components/Product'
 // import UserProfile from './components/UserProfile'
 // import Explore from './components/Explore'
 // import Navbar from './components/Navbar.js'
@@ -29,7 +29,7 @@ const App = () => (
       <Route exact path="/board/create" component={CreateBoard} />
       <Route exact path="/board/:id" component={Board} />
       <Route exact path="/product/create" component={CreateProduct} />
-      {/* <Route exact path="/product/:id" component={Product} /> */}
+      <Route exact path="/product/:id" component={Product} />
       {/* <Route exact path="/profile/:id" component={UserProfile} />
       <Route exact path="/explore" component={Explore} /> */}
     </Switch>
