@@ -9,9 +9,7 @@ export default function Product({ match, location }) {
   const [loading, updateLoading] = useState(true)
   const [product, getProduct] = useState({})
   const [offSite, updateOffSite] = useState(false)
-
-  console.log(purchased)
-  console.log(location.state.purchased)
+  const [errors, updateErrors] = useState('')
 
   useEffect(() => {
     async function fetchBoard() {
@@ -35,7 +33,7 @@ export default function Product({ match, location }) {
         headers: { Authorization: `Bearer ${token}` }
       })
     } catch (err) {
-      console.log(err.response.data)
+      updateErrors(err.response.data.messages)
     }
     updateOffSite(false)
     updatePurchased(!purchased)
@@ -55,6 +53,7 @@ export default function Product({ match, location }) {
       <button type='button' onClick={() => markAsPurchased()}>Yes</button>
       <button type='button' onClick={() => updateOffSite(false)}>No</button>
     </div>}
+    {errors && <div>{errors}</div>}
     <button type='button' onClick={() => window.history.back()}>Go back</button>
     <h2>{product.name}</h2>
     <section>

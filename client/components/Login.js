@@ -22,6 +22,7 @@ export default function Login({ history }) {
         localStorage.setItem('token', data.token)
       }
       history.push('/')
+      location.reload()
     } catch (err) {
       updateLoginErrors(true)
     }

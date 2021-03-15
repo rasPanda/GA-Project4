@@ -11,14 +11,14 @@ import CreateBoard from './components/CreateBoard'
 import Board from './components/Board'
 import CreateProduct from './components/CreateProduct'
 import Product from './components/Product'
-// import UserProfile from './components/UserProfile'
-// import Explore from './components/Explore'
-// import Navbar from './components/Navbar.js'
+import UserProfile from './components/UserProfile'
+import Explore from './components/Explore'
+import Navbar from './components/Navbar.js'
 // import Footer from './components/Footer.js'
 
 const App = () => (
   <BrowserRouter>
-    {/* <Navbar /> */}
+    {getLoggedInUserId() && <Navbar />}
     <Switch>
       {getLoggedInUserId() ? 
         <Route exact path="/" component={Homepage} /> :
@@ -30,8 +30,9 @@ const App = () => (
       <Route exact path="/board/:id" component={Board} />
       <Route exact path="/product/create" component={CreateProduct} />
       <Route exact path="/product/:id" component={Product} />
-      {/* <Route exact path="/profile/:id" component={UserProfile} />
-      <Route exact path="/explore" component={Explore} /> */}
+      <Route exact path="/profile/user" component={UserProfile} />
+      <Route exact path="/profile/:id" component={UserProfile} />
+      <Route exact path="/explore" component={Explore} />
     </Switch>
     {/* <Footer /> */}
   </BrowserRouter>

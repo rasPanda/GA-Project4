@@ -13,6 +13,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     password = fields.String(required=True)
     boards = fields.Nested('BoardSchema', many=True)
     following = fields.Nested('SimpleUserSchema', many=True)
+    followers = fields.Nested('SimpleUserSchema', many=True)
     messages_sent = fields.Nested('MessageSchema', many=True)
     messages_received = fields.Nested('MessageSchema', many=True)
 

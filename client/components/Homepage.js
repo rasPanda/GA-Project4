@@ -30,6 +30,7 @@ export default function Homepage() {
 
   if (boards.length === 0) {
     return <main>
+      <Link to='/board/create'><div>Create new list</div></Link>
       <div>No lists yet, create one!</div>
     </main>
   }

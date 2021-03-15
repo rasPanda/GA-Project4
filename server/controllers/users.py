@@ -26,10 +26,10 @@ def login():
     return { 'token': token, 'messages': f'Welcome back {user.username}!' }
 
 
-@router.route('/profile', methods=['GET'])
-@secure_route
-def get_own_profile():
-    return user_schema.jsonify(g.current_user), 200
+# @router.route('/profile', methods=['GET'])
+# @secure_route
+# def get_own_profile():
+#     return user_schema.jsonify(g.current_user), 200
 
 
 @router.route('/profile/<int:user_id>', methods=['GET'])

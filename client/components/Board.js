@@ -33,7 +33,6 @@ export default function Board({ match }) {
   }
 
   return <main>
-    <button type='button' onClick={() => window.history.back()}>Go back</button>
     <Link to='/board/create'><div>Create new list</div></Link>
     <h2>{board.name}</h2>
     <Link to={{
