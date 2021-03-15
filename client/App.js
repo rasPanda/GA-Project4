@@ -13,7 +13,8 @@ import CreateProduct from './components/CreateProduct'
 import Product from './components/Product'
 import UserProfile from './components/UserProfile'
 import Explore from './components/Explore'
-import Navbar from './components/Navbar.js'
+import Navbar from './components/Navbar'
+import Messages from './components/Messages'
 // import Footer from './components/Footer.js'
 
 const App = () => (
@@ -33,6 +34,7 @@ const App = () => (
       <Route exact path="/profile/user" component={UserProfile} />
       <Route exact path="/profile/:id" component={UserProfile} />
       <Route exact path="/explore" component={Explore} />
+      <Route exact path="/messages" component={Messages} />
     </Switch>
     {/* <Footer /> */}
   </BrowserRouter>

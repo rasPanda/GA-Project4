@@ -8,6 +8,6 @@ export default function Navbar() {
   return <nav>
     <Link to={'/'}><div>Home</div></Link>
     <Link to={`/profile/${userId}`}><div>Profile</div></Link>
-    <Link to={'/'}><div>Messages</div></Link>
+    <Link to={'/messages'}><div>Messages</div></Link>
   </nav>
 }

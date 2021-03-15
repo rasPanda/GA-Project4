@@ -36,6 +36,7 @@ export default function Homepage() {
   }
 
   return <main>
+    <Link to={'/explore'}><div>Explore</div></Link>
     <Link to='/board/create'><div>Create new list</div></Link>
     {boards.map((board) => {
       const productImages = board.products.map((product) => {
