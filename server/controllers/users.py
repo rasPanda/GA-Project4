@@ -15,7 +15,7 @@ def register():
     return user_schema.jsonify(user), 201
 
 
-@router.route("/login", methods=["GET"])
+@router.route("/login", methods=["POST"])
 def login():
     user = User.query.filter_by(email=request.json['email']).first()
     if not user:
