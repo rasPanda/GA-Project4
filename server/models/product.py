@@ -11,7 +11,6 @@ class Product(db.Model, BaseModel):
     __tablename__ = 'products'
     name = db.Column(db.String(100), nullable=False, unique=True)
     vendor = db.Column(db.String(50), nullable=False)
-    brand = db.Column(db.String(50), nullable=False)
     image = db.Column(db.Text, nullable=False)
     price = db.Column(db.String(10), nullable=False)
     dest_url = db.Column(db.Text, nullable=False)
