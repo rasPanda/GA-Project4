@@ -42,10 +42,11 @@ export default function Register({ history }) {
   }
 
   useEffect(() => {
-    if (registrationSuccess === true)
+    if (registrationSuccess === true) {
       setTimeout(() => {
         history.push('/login')
       }, 1500)
+    }
   }, [registrationSuccess])
 
   return <main className="hero is-fullheight-with-navbar">
@@ -102,8 +103,8 @@ export default function Register({ history }) {
           </div>
           {registerErrors &&
             registerErrors === 'Account exists for this email, Login?' ?
-            <small>Account already exists for this email, <Link to={'/login'}>Login?</Link></small> :
-            <small>{registerErrors}</small>
+            <div className="help">Account already exists for this email, <Link to={'/login'}>Login?</Link></div> :
+            <div className="help">{registerErrors}</div>
           }
           {registrationSuccess && <div className="help">Sign up successful! Redirecting...</div>}
         </form>

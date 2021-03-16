@@ -43,29 +43,31 @@ export default function Board({ match }) {
       }}><div className='button'>Add item to this list</div></Link>
     </section>
     <section className="section is-small has-text-centered">
-      <div className='container pl-6 pr-0 columns is-multiline is-mobile'>
-        {board.products.map((product) => {
-          return <article key={product.product.id} className='card mb-6' id='list-box-header'>
-            <h4 className='title is-4 is-size-6-mobile is-centered'>{product.product.name}</h4>
-            <Link to={{
-              pathname: `/product/${product.product.id}`,
-              state: {
-                boardId: boardId,
-                purchased: product.purchased
-              }
-            }}>
-              <div id='list-box' className='media-content p-2'>
-                <img width='100%' src={product.product.image} alt={product.product.name} />
-                <h5 className='subtitle is-6'>£{product.product.price}</h5>
-                <h5 className='subtitle is-6'>{product.product.vendor}</h5>
-                {product.purchased === true ?
-                  <h5 className='subtitle is-1 is-size-6-mobile is-6-mobile'>purchased</h5>
-                  :
-                  null}
-              </div>
-            </Link>
-          </article>
-        })}
+      <div className='container pl-6 pr-0'>
+        <div className='columns is-multiline is-mobile'>
+          {board.products.map((product) => {
+            return <article key={product.product.id} className='card mb-6' id='list-box-header'>
+              <h4 className='title is-4 is-size-6-mobile is-centered'>{product.product.name}</h4>
+              <Link to={{
+                pathname: `/product/${product.product.id}`,
+                state: {
+                  boardId: boardId,
+                  purchased: product.purchased
+                }
+              }}>
+                <div id='list-box' className='media-content p-2'>
+                  <img width='100%' src={product.product.image} alt={product.product.name} />
+                  <h5 className='subtitle is-6'>£{product.product.price}</h5>
+                  <h5 className='subtitle is-6'>{product.product.vendor}</h5>
+                  {product.purchased === true ?
+                    <h5 className='subtitle is-1 is-size-6-mobile is-6-mobile'>purchased</h5>
+                    :
+                    null}
+                </div>
+              </Link>
+            </article>
+          })}
+        </div>
       </div>
     </section>
   </main>

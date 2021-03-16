@@ -94,6 +94,10 @@ $control-border-width: 1px;
   font-size: 20px;
 }
 
+.modal-text {
+  color: $cream;
+}
+
 @media only screen and (max-width: 768px) {
   .heading {
     font-family: $headings;

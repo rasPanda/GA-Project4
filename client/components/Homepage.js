@@ -39,29 +39,31 @@ export default function Homepage() {
     <section className="section is-small has-text-centered">
       <Link to='/board/create'><p className='heading mx-0 mb-6'>create new list.</p></Link>
     </section>
-    <section className="section is-small has-text-centered">
-      <div className='container pl-6 pr-0 columns is-multiline is-mobile'>
-        {boards.map((board) => {
-          const productImages = board.products.map((product) => {
-            return product.product.image
+    <section className="section has-text-centered">
+      <div className='container pl-6 pr-0'>
+        <div className='columns is-multiline is-mobile'>
+          {boards.map((board) => {
+            const productImages = board.products.map((product) => {
+              return product.product.image
+            })
+            return <Link className='column is-half-desktop is-half-tablet is-full-mobile' key={board.id} to={`/board/${board.id}`}>
+              <article className='card' id='list-box-header'>
+                <h4 className='title is-4 is-size-5-mobile is-centered'>{board.name}</h4>
+                <div id='list-box' className='media-content'>
+                  <div>
+                    <img id='list-img' src={productImages[0] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
+                    <img id='list-img' src={productImages[1] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
+                  </div>
+                  <div className='media-content'>
+                    <img id='list-img' src={productImages[2] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
+                    <img id='list-img' src={productImages[3] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
+                  </div>
+                </div>
+              </article>
+            </Link>
           })
-          return <Link className='column is-half-desktop is-half-tablet is-full-mobile' key={board.id} to={`/board/${board.id}`}>
-            <article className='card' id='list-box-header'>
-              <h4 className='title is-4 is-size-5-mobile is-centered'>{board.name}</h4>
-              <div id='list-box' className='media-content'>
-                <div>
-                  <img id='list-img' src={productImages[0] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
-                  <img id='list-img' src={productImages[1] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
-                </div>
-                <div className='media-content'>
-                  <img id='list-img' src={productImages[2] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
-                  <img id='list-img' src={productImages[3] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
-                </div>
-              </div>
-            </article>
-          </Link>
-        })
-        }
+          }
+        </div>
       </div>
     </section>
     <section className="section is-large"></section>
