@@ -14,6 +14,10 @@ $body-background-color: $cream;
 $control-border-width: 1px;
 @import "../../node_modules/bulma/bulma.sass";
 
+#squares-div {
+  max-width: 100%;
+}
+
 #list-img {
   width: 200px;
   height: 200px; 
@@ -37,11 +41,16 @@ $control-border-width: 1px;
   width: 100%;
   max-width: 400px;
   height: auto;
+  padding-right: 30px;
 }
 
 #list-box-header {
   background-color: transparent;
   box-shadow: none;
+}
+
+.footer {
+  background-color: $blue;
 }
 
 .heading {

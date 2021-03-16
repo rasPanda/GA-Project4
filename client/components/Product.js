@@ -140,9 +140,9 @@ export default function Product({ match, location,history }) {
         </div>
         <button className='modal-close is-large' aria-label='close' onClick={() => showModal(false)} />
       </div>}
-      {(boardId && purchased) && <button className='button m-1' onClick={() => goToWebsite()}>Go to website</button>}
-      {(boardId && purchased) && <button className='button m-1' onClick={() => markAsPurchased()}>Mark as purchased</button>}
-      {(boardId && !purchased) && <button className='button m-1' onClick={() => markAsPurchased()}>Unmark as purchased</button>}
+      {(boardId && !purchased) && <button className='button m-1' onClick={() => goToWebsite()}>Go to website</button>}
+      {(boardId && !purchased) && <button className='button m-1' onClick={() => markAsPurchased()}>Mark as purchased</button>}
+      {(boardId && purchased) && <button className='button m-1' onClick={() => markAsPurchased()}>Unmark as purchased</button>}
       <h3 className='subtitle mt-3 is-4 is-size-6-mobile'>{product.vendor}</h3>
       <h3 className='subtitle is-4 is-size-6-mobile'>£{product.price}</h3>
       <div className='is-size-5 is-size-7-mobile'>{product.description}</div>

@@ -29,9 +29,14 @@ export default function Homepage() {
   }
 
   if (boards.length === 0) {
-    return <main>
-      <Link to='/board/create'><h2>Create new list</h2></Link>
-      <div>No lists yet, create one!</div>
+    return <main className='hero mr-6'>
+      <section className="section is-small has-text-centered">
+        <Link to='/board/create'><p className='heading'>create new list.</p></Link>
+      </section>
+      <section className="section is-large has-text-centered">
+        <div className='title is-3'>No lists yet, create one!</div>
+      </section>
+      <section className="section is-large"></section>
     </main>
   }
 

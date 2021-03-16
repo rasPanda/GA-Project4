@@ -185,7 +185,7 @@ export default function CreateProduct({ history, location }) {
                 value={formData.vendor}
                 onChange={handleFormChange}
                 name='vendor'
-                placeholder='Seller website...'
+                placeholder='Seller name...'
               />
             </div>
             <div className="field">

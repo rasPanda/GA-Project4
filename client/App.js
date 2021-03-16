@@ -15,7 +15,7 @@ import UserProfile from './components/UserProfile'
 import Explore from './components/Explore'
 import Navbar from './components/Navbar'
 import Messages from './components/Messages'
-// import Footer from './components/Footer.js'
+import Footer from './components/Footer.js'
 
 import './styles/style.scss'
 
@@ -41,7 +41,7 @@ const App = () => (
         <Route exact path="/messages" component={Messages} />
       </Switch>
     }
-    {/* <Footer /> */}
+    <Footer />
   </BrowserRouter>
 )
 
