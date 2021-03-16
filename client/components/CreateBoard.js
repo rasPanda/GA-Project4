@@ -4,8 +4,10 @@ import axios from 'axios'
 export default function CreateBoard({ history }) {
   const token = localStorage.getItem('token')
   const [boardName, updateBoardName] = useState('')
+  const [errors, updateErrors] = useState('')
 
   function handleChange(event) {
+    updateErrors('')
     updateBoardName(event.target.value)
   }
 
@@ -14,11 +16,20 @@ export default function CreateBoard({ history }) {
     const dataToSend = {
       name: `${boardName}`
     }
-    axios.post('/api/board', dataToSend, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    history.push('/')
-    location.reload()
+    if (boardName.length > 20) {
+      updateErrors('Name too long!')
+      return
+    }
+    try {
+      console.log(dataToSend)
+      axios.post('/api/board', dataToSend, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      history.push('/')
+      location.reload()
+    } catch (err) {
+      updateErrors(err.response.data.messages)
+    }
   }
 
   return <main className="hero is-fullheight-with-navbar">
@@ -41,6 +52,7 @@ export default function CreateBoard({ history }) {
           <div className="control">
             <button className='button'>Create list</button>
           </div>
+          {errors && <div className='help'>{errors}</div>}
         </form>
       </div>
     </section>

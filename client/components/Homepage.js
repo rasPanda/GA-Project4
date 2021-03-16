@@ -48,7 +48,7 @@ export default function Homepage() {
             })
             return <Link className='column is-half-desktop is-half-tablet is-full-mobile' key={board.id} to={`/board/${board.id}`}>
               <article className='card' id='list-box-header'>
-                <h4 className='title is-4 is-size-5-mobile is-centered'>{board.name}</h4>
+                <h4 className='title is-3 is-size-5-mobile is-centered'>{board.name}</h4>
                 <div id='list-box' className='media-content'>
                   <div>
                     <img id='list-img' src={productImages[0] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />

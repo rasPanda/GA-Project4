@@ -31,9 +31,9 @@ export default function CreateProduct({ history, location }) {
     event.preventDefault()
     if (!scraperUrl) {
       updateScrapeError('Please provide a URL!')
+      updateLoading(false)
       return
     }
-    setCounter(counter + 1)
     const search = await axios.get(`/api/product/search?url=${scraperUrl}`)
     if (search.data.messages !== 'No duplicate') {
       updateScrapeError('Product found!')
@@ -49,6 +49,7 @@ export default function CreateProduct({ history, location }) {
         })
     } catch (err) {
       updateScrapeError('No response. Please check the URL and try again!')
+      setCounter(counter + 1)
     }
     updateLoading(false)
   }
@@ -75,7 +76,6 @@ export default function CreateProduct({ history, location }) {
           addProductToBoard(res.data.id)
         })
     } catch (err) {
-      console.log(err.response.data)
       updateErrors(err.response.data.messages)
     }
   }
@@ -95,85 +95,116 @@ export default function CreateProduct({ history, location }) {
   }
 
   return <main className="hero is-fullheight-with-navbar">
-    <button type='button' onClick={() => window.history.back()}>Cancel</button>
+    <button className='button mr-6' onClick={() => window.history.back()}>Cancel</button>
     <section className="hero-body mt-0 mr-6 columns is-centered">
       {scraper === false ?
-        <form onSubmit={handleScraperSubmit}>
-          <h2>Copy and paste the items&apos; product URL here:</h2>
-          {loading && <div>LOADING</div>}
-          <div>
-            <input
-              type='text'
-              value={scraperUrl}
-              onChange={handleScraperChange}
-              name='scraperUrl'
-              placeholder='Product page URL...'
-            />
-          </div>
-          <button>Next</button>
-          {scrapeError && <div>{scrapeError}</div>}
-          {counter >= 3 && <div>Having trouble? <button>Skip this step</button></div>}
-        </form>
+        <div className="column is-half is-vcentered">
+          <h2 className="title is-5">Copy and paste the items&apos; product URL here:</h2>
+          <form onSubmit={handleScraperSubmit}>
+            {loading && <div>LOADING</div>}
+            <div className="field has-addons">
+              <div className='control is-expanded'>
+                <input
+                  className='input'
+                  type='text'
+                  value={scraperUrl}
+                  onChange={handleScraperChange}
+                  name='scraperUrl'
+                  placeholder='Product page URL...'
+                />
+              </div>
+              <div className="control">
+                <button className='button'>Next</button>
+              </div>
+            </div>
+            {scrapeError && <div>{scrapeError}</div>}
+            {counter >= 3 && <div>
+              <div>Having trouble?</div>
+              <button className='button' onClick={() => runScraper(true)}>Skip this step</button>
+            </div>}
+          </form>
+        </div>
         :
-        <form onSubmit={handleFormSubmit}>
-          <button type='button' onClick={() => runScraper(false)}>Go back</button>
-          <h2>Confirm & complete the item details below</h2>
-          <div>
-            <label>Name</label>
-            <input
-              type='text'
-              value={formData.name}
-              onChange={handleFormChange}
-              name='name'
-              placeholder='Item name...'
-            />
-          </div>
-          <div>
-            <label>Description</label>
-            <textarea
-              type='text'
-              value={formData.description}
-              onChange={handleFormChange}
-              name='description'
-              placeholder='Item description...'
-            />
-          </div>
-          <div>
-            <label>Image</label>
-            <input
-              type='url'
-              value={formData.image}
-              onChange={handleFormChange}
-              name='image'
-              placeholder='Image url...'
-            />
-            <button type='button' onClick={() => showImgHelp(!imgHelp)}>Help</button>
-            {imgHelp && <div>(Right click on the product image, and click &quot;Copy image address&quot; to copy!)</div>}
+        <div className="column is-half is-vcentered">
+          <button className='button mb-3' onClick={() => runScraper(false)}>Go back</button>
+          <form onSubmit={handleFormSubmit}>
+            <h2 className="title is-5">Confirm & complete the item details below</h2>
+            <div className="field">
+              <label className="label">Name</label>
+              <input
+                className='input'
+                type='text'
+                value={formData.name}
+                onChange={handleFormChange}
+                name='name'
+                placeholder='Item name...'
+              />
+            </div>
+            <div className="field">
+              <label className="label">Description</label>
+              <textarea
+                className='textarea'
+                rows='5'
+                type='text'
+                value={formData.description}
+                onChange={handleFormChange}
+                name='description'
+                placeholder='Item description...'
+              />
+            </div>
+            <div className="field has-addons">
+              <div className='control is-expanded'>
+                <label className="label">Image</label>
+                <input
+                  className='input'
+                  type='url'
+                  value={formData.image}
+                  onChange={handleFormChange}
+                  name='image'
+                  placeholder='Image url...'
+                />
+                <button type='button' onClick={() => showImgHelp(!imgHelp)}>Help</button>
+              </div>
+              {imgHelp && <div className='modal is-active'>
+                <div className='modal-background'></div>
+                <div className='modal-content has-text-centered'>
+                  <p className='modal-text'>1. Go to the product page, and find the right picture</p>
+                  <p className='modal-text'>2. Right click on the product image (hold down click on mobile)</p>
+                  <p className='modal-text'>3. Click &quot;Copy image address&quot; to copy the link</p>
+                  <p className='modal-text'>4. Paste the link in the form!</p>
+                </div>
+                <button className='modal-close is-large' aria-label='close' onClick={() => showImgHelp(false)} />
+              </div>}
+            </div>
             <img width='100%' src={formData.image || null} />
-          </div>
-          <div>
-            <label>Seller</label>
-            <input
-              type='text'
-              value={formData.vendor}
-              onChange={handleFormChange}
-              name='vendor'
-              placeholder='Seller website...'
-            />
-          </div>
-          <div>
-            <label>Price</label>
-            <input
-              type='text'
-              value={formData.price}
-              onChange={handleFormChange}
-              name='price'
-              placeholder='Item price...'
-            />
-          </div>
-          <button>Confirm</button>
-          {errors && <div>{errors}</div>}
-        </form>
+            <div className="field">
+              <label className="label">Seller</label>
+              <input
+                className='input'
+                type='text'
+                value={formData.vendor}
+                onChange={handleFormChange}
+                name='vendor'
+                placeholder='Seller website...'
+              />
+            </div>
+            <div className="field">
+              <label className="label">Price</label>
+              <input
+                className='input'
+                type='text'
+                value={formData.price}
+                onChange={handleFormChange}
+                name='price'
+                placeholder='Item price...'
+              />
+            </div>
+            <div className='control'>
+              <button className='button'>Confirm</button>
+            </div>
+            {errors && <div className='help'>{errors}</div>}
+          </form>
+        </div>
       }
     </section>
   </main>
