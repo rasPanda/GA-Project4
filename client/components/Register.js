@@ -45,61 +45,69 @@ export default function Register({ history }) {
     if (registrationSuccess === true)
       setTimeout(() => {
         history.push('/login')
-      }, 2000)
+      }, 1500)
   }, [registrationSuccess])
 
-  return <main>
-    <section>
-      <form onSubmit={handleRegisterSubmit}>
-        <h2>Sign up</h2>
-        {registrationSuccess && <div><small>Sign Up Successful! Redirecting...</small></div>}
-        <div>
-          <label>Username</label>
-          <input
-            type="text"
-            value={registerData.username}
-            onChange={handleRegisterChange}
-            name='username'
-            placeholder='Enter your username'
-          />
-        </div>
-        <div>
-          <label>Email address</label>
-          <input
-            type="email"
-            value={registerData.email}
-            onChange={handleRegisterChange}
-            name='email'
-            placeholder='Enter your email'
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={registerData.password}
-            onChange={handleRegisterChange}
-            name='password'
-            placeholder='Enter your password'
-          />
-        </div>
-        <div>
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            value={registerData.passwordConfirmation}
-            onChange={handleRegisterChange}
-            name='passwordConfirmation'
-            placeholder='Confirm your password'
-          />
-        </div>
-        <button>Sumbit</button>
-        {registerErrors &&
-          registerErrors === 'Account exists for this email, Login?' ?
-          <small>Account exists for this email, <Link to={'/login'}>Login?</Link></small> :
-          <small>{registerErrors}</small>
-        }
-      </form>
+  return <main className="hero is-fullheight-with-navbar">
+    <section className="hero-body columns is-centered">
+      <div className="column is-half is-vcentered">
+        <h2 className="title">Sign up</h2>
+        <form onSubmit={handleRegisterSubmit}>
+          <div className="field">
+            <label className="label">Username</label>
+            <input
+              className='input'
+              type="text"
+              value={registerData.username}
+              onChange={handleRegisterChange}
+              name='username'
+              placeholder='Enter your username'
+            />
+          </div>
+          <div className="field">
+            <label className="label">Email address</label>
+            <input
+              className='input'
+              type="email"
+              value={registerData.email}
+              onChange={handleRegisterChange}
+              name='email'
+              placeholder='Enter your email'
+            />
+          </div>
+          <div className="field">
+            <label className="label">Password</label>
+            <input
+              className='input'
+              type="password"
+              value={registerData.password}
+              onChange={handleRegisterChange}
+              name='password'
+              placeholder='Enter your password'
+            />
+          </div>
+          <div className="field">
+            <label className="label">Confirm Password</label>
+            <input
+              className='input'
+              type="password"
+              value={registerData.passwordConfirmation}
+              onChange={handleRegisterChange}
+              name='passwordConfirmation'
+              placeholder='Confirm your password'
+            />
+          </div>
+          <div className="control">
+            <button className='button'>Sumbit</button>
+          </div>
+          {registerErrors &&
+            registerErrors === 'Account exists for this email, Login?' ?
+            <small>Account already exists for this email, <Link to={'/login'}>Login?</Link></small> :
+            <small>{registerErrors}</small>
+          }
+          {registrationSuccess && <div className="help">Sign up successful! Redirecting...</div>}
+        </form>
+      </div>
     </section>
   </main>
 

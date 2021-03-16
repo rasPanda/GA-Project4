@@ -1,0 +1,49 @@
+@charset "utf-8";
+// Import a Google Font
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Open+Sans&display=swap');
+// Set your brand colors
+$blue: #99ccff;
+$cream: #faf6e3;
+$black: #0b0e10;
+// Update Bulma's global variables
+$family-sans-serif: "Julius Sans One", sans-serif;
+$family-monospace: "Open Sans", monospace;
+// $grey-dark: $table-blue;
+// $primary: $table-green;
+// $light: $yellow;
+// $danger: $pink;
+
+// $info: $table-blue;
+// $success: $fluoro-blue;
+$link: $black;
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+// Update some of Bulma's component variables
+$body-background-color: $cream;
+$control-border-width: 1px;
+// $input-border-color: $table-blue;
+// $button-border-color: $success;
+// $input-shadow: none;
+// Import only what you need from Bulma
+@import "../../node_modules/bulma/bulma.sass";
+
+.hero-body {
+  background-color: $blue;
+
+}
+
+.label {
+  font-family: $family-monospace;
+}
+
+.button {
+  font-family: $family-monospace;
+}
+
+.field {
+  font-family: $family-monospace;
+}
+
+.level {
+  font-size: 20px;
+}

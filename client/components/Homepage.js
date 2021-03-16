@@ -21,10 +21,10 @@ export default function Homepage() {
   }, [])
 
   if (loading) {
-    return <main>
-      <div>
-        Loading boards
-      </div>
+    return <main className="hero is-fullheight">
+      <section className="hero-body columns is-centered">
+        <div>Loading boards</div>
+      </section>
     </main>
   }
 

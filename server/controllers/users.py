@@ -19,17 +19,11 @@ def register():
 def login():
     user = User.query.filter_by(email=request.json['email']).first()
     if not user:
-        return { 'messages': 'No player found' }
+        return { 'messages': 'No account found' }, 401
     if not user.validate_password(request.json['password']):
-        return { 'messages': 'Incorrect password' }, 402
+        return { 'messages': 'Incorrect password' }, 401
     token = user.generate_token()
     return { 'token': token, 'messages': f'Welcome back {user.username}!' }
-
-
-# @router.route('/profile', methods=['GET'])
-# @secure_route
-# def get_own_profile():
-#     return user_schema.jsonify(g.current_user), 200
 
 
 @router.route('/profile/<int:user_id>', methods=['GET'])

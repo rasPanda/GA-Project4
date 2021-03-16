@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { getLoggedInUserId } from '../lib/auth'
+import profilePic from '../images/default_user_pic.png'
 
 export default function UserProfile({ match }) {
   const token = localStorage.getItem('token')
@@ -70,7 +71,7 @@ export default function UserProfile({ match }) {
 
   return <main>
     <h2>{profile.username}</h2>
-    <img src={'/images/default_user_pic.png'} alt={'Profile picture'} />
+    <img src={profilePic} alt={'Profile picture'} />
     <div>Following: {profile.following ?
       profile.following.length
       :
