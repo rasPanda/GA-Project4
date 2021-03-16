@@ -1,6 +1,6 @@
 @charset "utf-8";
 // Import a Google Font
-@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Julius+Sans+One&family=Open+Sans:wght@300&display=swap');
 // Set your brand colors
 $blue: #99ccff;
 $cream: #faf6e3;
@@ -8,6 +8,7 @@ $black: #0b0e10;
 // Update Bulma's global variables
 $family-sans-serif: "Julius Sans One", sans-serif;
 $family-monospace: "Open Sans", monospace;
+$headings: "DM Serif Display", serif;
 // $grey-dark: $table-blue;
 // $primary: $table-green;
 // $light: $yellow;
@@ -15,6 +16,7 @@ $family-monospace: "Open Sans", monospace;
 
 // $info: $table-blue;
 // $success: $fluoro-blue;
+
 $link: $black;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
@@ -27,9 +29,52 @@ $control-border-width: 1px;
 // Import only what you need from Bulma
 @import "../../node_modules/bulma/bulma.sass";
 
+img {
+  border: none;
+}
+
+#list-box {
+  border-width: 15px;
+  border-style: solid;
+  border-radius: 0;
+  border-color: $black;
+  max-width: 1000px;
+  max-height: 1000px;
+  background-color: $cream;
+}
+
+#main {
+  height: 100vh;
+}
+
+#nav-logo {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+#list-box-header {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.heading {
+  font-family: $headings;
+  font-size: 70px;
+  text-transform: lowercase;
+}
+
 .hero-body {
   background-color: $blue;
+}
 
+.section {
+  background-color: $blue;
+}
+
+.help {
+  font-family: $family-monospace;
+  color: $black;
 }
 
 .label {
@@ -40,10 +85,34 @@ $control-border-width: 1px;
   font-family: $family-monospace;
 }
 
-.field {
+.input {
   font-family: $family-monospace;
 }
 
 .level {
   font-size: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .heading {
+    font-family: $headings;
+    font-size: 35px;
+    text-transform: lowercase;
+  }
+
+  #nav-logo {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+  }
+  
+  #squares {
+    max-width: 500px;
+    height: auto;
+  }
+
+  #squares-div {
+    max-width: 300px;
+    overflow: hidden;
+  }
 }

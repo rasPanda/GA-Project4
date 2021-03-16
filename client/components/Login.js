@@ -29,7 +29,7 @@ export default function Login({ history }) {
         updateLoginSuccess(true)
         setTimeout(() => {
           history.push('/')
-          location.reload()
+          window.location.reload()
         }, 1500)
       }
     } catch (err) {
@@ -38,7 +38,7 @@ export default function Login({ history }) {
   }
 
   return <main className="hero is-fullheight-with-navbar">
-    <section className="hero-body columns is-centered">
+    <section className="hero-body mt-0 mr-6 columns is-centered">
       <div className="column is-half is-vcentered">
         <h2 className="title">Log in</h2>
         <form onSubmit={handleLoginSubmit}>

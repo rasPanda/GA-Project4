@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getLoggedInUserId } from '../lib/auth'
+import logo from '../images/listing_logo_small_canvas.png'
 
 export default function Navbar() {
   const userId = getLoggedInUserId()
@@ -10,8 +11,8 @@ export default function Navbar() {
     location.reload()
   }
 
-  return <nav className="level is-mobile">
-    <div className='level-left pl-6 pt-4'>
+  return <nav className="level mb-0 is-mobile">
+    <div className='level-left pl-3'>
       {!userId ?
         <div className="container">
           <Link to={'/login'} className='link'>Log in</Link>
@@ -26,8 +27,8 @@ export default function Navbar() {
         </div>
       }
     </div>
-    <div className='level-right pr-6 pt-4'>
-      <img src='logo placeholder' alt='Listing logo' />
+    <div className='level-right pr-3'>
+      <img id='nav-logo' src={logo} alt='Listing logo' />
     </div>
   </nav>
 }
