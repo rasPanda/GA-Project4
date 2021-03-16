@@ -69,19 +69,32 @@ export default function UserProfile({ match }) {
     setIsFollowing(!isFollowing)
   }
 
-  return <main>
-    <h2>{profile.username}</h2>
-    <img src={profilePic} alt={'Profile picture'} />
-    <div>Following: {profile.following ?
-      profile.following.length
-      :
-      0}</div>
-    <div>Followers: {profile.followers ?
-      profile.followers.length
-      :
-      0}</div>
-    {(!ownProfile && !isFollowing) && <button onClick={() => follow()}>Follow</button>}
-    {(!ownProfile && isFollowing) && <button onClick={() => unfollow()}>Unfollow</button>}
-    {followConf && <div>{followConf}</div>}
+  return <main className='hero mr-6'>
+    <section className="section is-small has-text-centered">
+      <h2 className='title is-2'>{profile.username}</h2>
+    </section>
+    <section className="section has-text-centered">
+      <div className='container'>
+        <div className='columns is-centered is-mobile'>
+          <div className='column is-two-thirds'>
+            <div id='list-box' className='mb-2'>
+              <img id='explore-img' src={profilePic} alt={'Profile picture'} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='subtitle is-4'>Following: {profile.following ?
+        profile.following.length
+        :
+        0}</div>
+      <div className='subtitle is-4'>Followers: {profile.followers ?
+        profile.followers.length
+        :
+        0}</div>
+      {(!ownProfile && !isFollowing) && <button className='button m-2' onClick={() => follow()}>Follow</button>}
+      {(!ownProfile && isFollowing) && <button className='button m-2' onClick={() => unfollow()}>Unfollow</button>}
+      {followConf && <div>{followConf}</div>}
+    </section>
+    <section className="section is-large"></section>
   </main>
 }

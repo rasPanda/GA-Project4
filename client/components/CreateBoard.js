@@ -21,7 +21,6 @@ export default function CreateBoard({ history }) {
       return
     }
     try {
-      console.log(dataToSend)
       axios.post('/api/board', dataToSend, {
         headers: { Authorization: `Bearer ${token}` }
       })

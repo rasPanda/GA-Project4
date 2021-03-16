@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getLoggedInUserId } from '../lib/auth'
 import logo from '../images/listing_logo_small_canvas.png'
 
 export default function Navbar() {
   const userId = getLoggedInUserId()
+  const [logout, setLogout] = useState(false)
 
-  function logOut() {
-    localStorage.removeItem('token')
-    location.reload()
-  }
+  useEffect(() => {
+    if (logout === true) {
+      localStorage.removeItem('token')
+      location.reload()
+      setLogout(false)
+    }
+  }, [logout])
+
 
   return <nav className="level mb-0 is-mobile">
     <div className='level-left pl-3'>
@@ -23,7 +28,7 @@ export default function Navbar() {
           <Link to={'/'} className='level-item'>HOME</Link>
           <Link to={'/explore'} className='link'>Explore</Link>
           <Link to={`/profile/${userId}`} className='level-item'>Profile</Link>
-          <Link to={'/'} onClick={() => logOut()} className='level-item'>Log out</Link>
+          <Link to={'/'} onClick={() => setLogout(true)} className='link'>Log out</Link>
         </div>
       }
     </div>

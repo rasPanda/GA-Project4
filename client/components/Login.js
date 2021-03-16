@@ -22,7 +22,6 @@ export default function Login({ history }) {
     updateLoginErrors(false)
     try {
       const { data } = await axios.post('/api/login', loginData)
-      console.log(data)
       getWelcome(data.messages)
       if (!localStorage.token) {
         localStorage.setItem('token', data.token)

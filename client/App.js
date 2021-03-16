@@ -45,22 +45,4 @@ const App = () => (
   </BrowserRouter>
 )
 
-// const Home = () => <Link to={'/test/backend'}>
-//   Go to /hello/world page.
-// </Link>
-
-// // ! Just a little component to test that you can talk to your flask server, check if it
-// // ! works in network tab.
-// const TestBackend = () => {
-//   useEffect(() => {
-//     // ? This is going to try localhost:5000/api
-//     axios.get('/api/product')
-//       .then(({ data }) => console.log(data))
-//   }, [])
-
-//   return <p>
-//     Hello World
-//   </p>
-// }
-
 export default App

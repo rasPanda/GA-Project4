@@ -34,6 +34,11 @@ $control-border-width: 1px;
   height: 200px; 
 }
 
+#explore-img {
+  width: 500px;
+  height: 500px; 
+}
+
 #list-box {
   border-width: 15px;
   border-style: solid;
@@ -58,6 +63,7 @@ $control-border-width: 1px;
   font-family: $headings;
   font-size: 70px;
   text-transform: lowercase;
+  color: $black;
 }
 
 .hero-body {
@@ -93,6 +99,11 @@ $control-border-width: 1px;
   color: $cream;
 }
 
+.modal-link:hover {
+  color: $cream;
+  cursor: pointer;
+}
+
 // .button {
 //   border-width: 2px;
 //   border-style: solid;
@@ -126,6 +137,11 @@ $control-border-width: 1px;
   #list-img {
     width: 100px;
     height: 100px; 
+  }
+
+  #explore-img {
+    width: 200px;
+    height: 200px; 
   }
 
   .pl-6 {

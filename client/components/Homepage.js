@@ -9,7 +9,7 @@ export default function Homepage() {
 
   useEffect(() => {
     async function fetchBoards() {
-      await axios.get('api/board', {
+      await axios.get('/api/board', {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => {
@@ -37,10 +37,10 @@ export default function Homepage() {
 
   return <main className='hero mr-6'>
     <section className="section is-small has-text-centered">
-      <Link to='/board/create'><p className='heading mx-0 mb-6'>create new list.</p></Link>
+      <Link to='/board/create'><p className='heading'>create new list.</p></Link>
     </section>
     <section className="section has-text-centered">
-      <div className='container pl-6 pr-0'>
+      <div className='container pl-2 pr-0'>
         <div className='columns is-multiline is-mobile'>
           {boards.map((board) => {
             const productImages = board.products.map((product) => {

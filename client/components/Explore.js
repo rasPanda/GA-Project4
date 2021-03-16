@@ -6,8 +6,6 @@ export default function Explore() {
   const [products, getProducts] = useState([])
   const [loading, updateLoading] = useState(true)
 
-  console.log(products)
-
   useEffect(() => {
     async function fetchProducts() {
       await axios.get('/api/product')
@@ -27,15 +25,25 @@ export default function Explore() {
     </main>
   }
 
-  return <main>
-    <h2>Explore products</h2>
-    {products.map((product) => {
-      return <Link key={product.id} to={`/product/${product.id}`}>
-        <div>
-          <img width='100%' src={product.image} />
-          <div>{product.name}</div>
+  return <main className='hero mr-6'>
+    <section className="section has-text-centered">
+      <h2 className='heading'>Explore products.</h2>
+    </section>
+    <section className="section has-text-centered">
+      <div className='container pl-2 pr-0'>
+        <div className='columns is-multiline is-mobile'>
+          {products.map((product) => {
+            return <Link className='column is-half-desktop is-half-tablet is-full-mobile' key={product.id} to={`/product/${product.id}`}>
+              <article className='card' id='list-box-header'>
+                <div id='list-box' className='media-content'>
+                  <img id='explore-img' src={product.image} />
+                </div>
+              </article>
+            </Link>
+          })}
         </div>
-      </Link>
-    })}
-  </main>
+      </div>
+    </section>
+    <section className="section is-large"></section>
+  </main >
 }
