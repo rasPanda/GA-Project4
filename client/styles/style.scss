@@ -1,32 +1,17 @@
 @charset "utf-8";
-// Import a Google Font
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Julius+Sans+One&family=Open+Sans:wght@300&display=swap');
-// Set your brand colors
 $blue: #99ccff;
 $cream: #faf6e3;
 $black: #0b0e10;
-// Update Bulma's global variables
 $family-sans-serif: "Julius Sans One", sans-serif;
 $family-monospace: "Open Sans", monospace;
 $headings: "DM Serif Display", serif;
-// $grey-dark: $table-blue;
-// $primary: $table-green;
-// $light: $yellow;
-// $danger: $pink;
-
-// $info: $table-blue;
-// $success: $fluoro-blue;
 
 $link: $black;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
-// Update some of Bulma's component variables
 $body-background-color: $cream;
 $control-border-width: 1px;
-// $input-border-color: $cream;
-// $button-border-color: $success;
-// $input-shadow: none;
-// Import only what you need from Bulma
 @import "../../node_modules/bulma/bulma.sass";
 
 #list-img {
@@ -102,6 +87,10 @@ $control-border-width: 1px;
 .modal-link:hover {
   color: $cream;
   cursor: pointer;
+}
+
+.level-item {
+  justify-content: flex-start !important;
 }
 
 // .button {

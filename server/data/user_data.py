@@ -9,17 +9,17 @@ user1 = User(
 )
 
 user2 = User(
-    username="shamarreigns",
-    password='Tianna92',
-    email='shamar@shamar.com',
+    username="random1",
+    password='12345678',
+    email='ran@dom1.com',
     role='normal',
     followers=[user1]
 )
 
 user3 = User(
-    username="random",
+    username="random2",
     password='12345678',
-    email='ran@dom.com',
+    email='ran@dom2.com',
     role='normal',
     followers=[user1, user2]
 )

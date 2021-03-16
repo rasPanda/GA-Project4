@@ -20,15 +20,15 @@ export default function Navbar() {
     <div className='level-left pl-3'>
       {!userId ?
         <div className="container">
-          <Link to={'/login'} className='link'>Log in</Link>
+          <Link to={'/login'} className='level-item'>Log in</Link>
           <Link to={'/register'} className='level-item'>Register</Link>
         </div>
         :
         <div className="container">
           <Link to={'/'} className='level-item'>HOME</Link>
-          <Link to={'/explore'} className='link'>Explore</Link>
+          <Link to={'/explore'} className='level-item'>Explore</Link>
           <Link to={`/profile/${userId}`} className='level-item'>Profile</Link>
-          <Link to={'/'} onClick={() => setLogout(true)} className='link'>Log out</Link>
+          <Link to={'/'} onClick={() => setLogout(true)} className='level-item'>Log out</Link>
         </div>
       }
     </div>
