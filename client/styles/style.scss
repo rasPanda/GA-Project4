@@ -23,14 +23,15 @@ $fullhd-enabled: false;
 // Update some of Bulma's component variables
 $body-background-color: $cream;
 $control-border-width: 1px;
-// $input-border-color: $table-blue;
+// $input-border-color: $cream;
 // $button-border-color: $success;
 // $input-shadow: none;
 // Import only what you need from Bulma
 @import "../../node_modules/bulma/bulma.sass";
 
-img {
-  border: none;
+#list-img {
+  width: 200px;
+  height: 200px; 
 }
 
 #list-box {
@@ -93,7 +94,7 @@ img {
   font-size: 20px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   .heading {
     font-family: $headings;
     font-size: 35px;
@@ -114,5 +115,14 @@ img {
   #squares-div {
     max-width: 300px;
     overflow: hidden;
+  }
+
+  #list-img {
+    width: 100px;
+    height: 100px; 
+  }
+
+  .pl-6 {
+    padding-left: 0px !important;
   }
 }

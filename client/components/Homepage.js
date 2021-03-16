@@ -47,15 +47,15 @@ export default function Homepage() {
           })
           return <Link className='column is-half-desktop is-half-tablet is-full-mobile' key={board.id} to={`/board/${board.id}`}>
             <article className='card' id='list-box-header'>
-              <p className='card-header-title is-centered'>{board.name}</p>
+              <h4 className='title is-4 is-size-5-mobile is-centered'>{board.name}</h4>
               <div id='list-box' className='media-content'>
                 <div>
-                  <img width="200" height="200" src={productImages[0] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
-                  <img width="200" height="200" src={productImages[1] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
+                  <img id='list-img' src={productImages[0] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
+                  <img id='list-img' src={productImages[1] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
                 </div>
                 <div className='media-content'>
-                  <img width="200" height="200" src={productImages[2] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
-                  <img width="200" height="200" src={productImages[3] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
+                  <img id='list-img' src={productImages[2] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
+                  <img id='list-img' src={productImages[3] || 'http://www-cdr.stanford.edu/~petrie/blank.gif'} />
                 </div>
               </div>
             </article>

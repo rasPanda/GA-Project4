@@ -21,21 +21,28 @@ export default function CreateBoard({ history }) {
     location.reload()
   }
 
-  return <main>
-    <button type='button' onClick={() => window.history.back()}>Cancel</button>
-    <form onSubmit={handleSubmit}>
-      <h2>Create a new list</h2>
-      <div>
-        <label>List name</label>
-        <input 
-          type='text'
-          value={boardName}
-          onChange={handleChange}
-          name='listName'
-          placeholder='My new list'
-        />
+  return <main className="hero is-fullheight-with-navbar">
+    <button className='button mr-6' onClick={() => window.history.back()}>Cancel</button>
+    <section className="hero-body mt-0 mr-6 columns is-centered">
+      <div className="column is-half is-vcentered">
+        <h2 className="title is-1">Create a new list</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="field">
+            <label className="label">List name</label>
+            <input
+              className='input'
+              type='text'
+              value={boardName}
+              onChange={handleChange}
+              name='listName'
+              placeholder='My new list'
+            />
+          </div>
+          <div className="control">
+            <button className='button'>Create list</button>
+          </div>
+        </form>
       </div>
-      <button>Create list</button>
-    </form>
+    </section>
   </main>
 }

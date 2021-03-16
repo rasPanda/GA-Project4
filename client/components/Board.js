@@ -32,36 +32,41 @@ export default function Board({ match }) {
     </main>
   }
 
-  return <main>
-    <Link to='/board/create'><div>Create new list</div></Link>
-    <h2>{board.name}</h2>
-    <Link to={{
-      pathname: '/product/create',
-      state: {
-        boardId: boardId
-      }
-    }}><button type='button'>Add item to this list</button></Link>
-    <section>
-      {board.products.map((product) => {
-        return <section key={product.product.id}>
-          {product.purchased === true ?
-            <div>purchased</div>
-            :
-            null}
-          <div>£{product.product.price}</div>
-          <div>{product.product.vendor}</div>
-          <Link to={{
-            pathname: `/product/${product.product.id}`,
-            state: {
-              boardId: boardId,
-              purchased: product.purchased
-            }
-          }}>
-            <h4>{product.product.name}</h4>
-            <img width='100%' src={product.product.image} alt={product.product.name} />
-          </Link>
-        </section>
-      })}
+  return <main className='hero mr-6'>
+    <section className="section is-small has-text-centered">
+      <h2 className='title is-2'>{board.name}</h2>
+      <Link to={{
+        pathname: '/product/create',
+        state: {
+          boardId: boardId
+        }
+      }}><div className='button'>Add item to this list</div></Link>
+    </section>
+    <section className="section is-small has-text-centered">
+      <div className='container pl-6 pr-0 columns is-multiline is-mobile'>
+        {board.products.map((product) => {
+          return <article key={product.product.id} className='card mb-6' id='list-box-header'>
+            <h4 className='title is-4 is-size-6-mobile is-centered'>{product.product.name}</h4>
+            <Link to={{
+              pathname: `/product/${product.product.id}`,
+              state: {
+                boardId: boardId,
+                purchased: product.purchased
+              }
+            }}>
+              <div id='list-box' className='media-content p-2'>
+                <img width='100%' src={product.product.image} alt={product.product.name} />
+                <h5 className='subtitle is-6'>£{product.product.price}</h5>
+                <h5 className='subtitle is-6'>{product.product.vendor}</h5>
+                {product.purchased === true ?
+                  <h5 className='subtitle is-1 is-size-6-mobile is-6-mobile'>purchased</h5>
+                  :
+                  null}
+              </div>
+            </Link>
+          </article>
+        })}
+      </div>
     </section>
   </main>
 }

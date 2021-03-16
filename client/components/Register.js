@@ -51,7 +51,7 @@ export default function Register({ history }) {
   return <main className="hero is-fullheight-with-navbar">
     <section className="hero-body mt-0 mr-6 columns is-centered">
       <div className="column is-half is-vcentered">
-        <h2 className="title">Sign up</h2>
+        <h2 className="title is-1">Sign up</h2>
         <form onSubmit={handleRegisterSubmit}>
           <div className="field">
             <label className="label">Username</label>
