@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import blankGif from '../assets/blank.gif'
 
 export default function Homepage() {
   const token = localStorage.getItem('token')
@@ -56,12 +57,12 @@ export default function Homepage() {
                 <h4 className='title is-3 is-size-5-mobile is-centered'>{board.name}</h4>
                 <div id='list-box' className='media-content'>
                   <div>
-                    <img id='list-img' src={productImages[0] || 'https://upload.wikimedia.org/wikipedia/commons/c/c0/Blank.gif'} />
-                    <img id='list-img' src={productImages[1] || 'https://upload.wikimedia.org/wikipedia/commons/c/c0/Blank.gif'} />
+                    <img id='list-img' src={productImages[0] || blankGif} />
+                    <img id='list-img' src={productImages[1] || blankGif} />
                   </div>
                   <div className='media-content'>
-                    <img id='list-img' src={productImages[2] || 'https://upload.wikimedia.org/wikipedia/commons/c/c0/Blank.gif'} />
-                    <img id='list-img' src={productImages[3] || 'https://upload.wikimedia.org/wikipedia/commons/c/c0/Blank.gif'} />
+                    <img id='list-img' src={productImages[2] || blankGif} />
+                    <img id='list-img' src={productImages[3] || blankGif} />
                   </div>
                 </div>
               </article>

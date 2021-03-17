@@ -152,8 +152,8 @@ export default function CreateProduct({ history, location }) {
                 placeholder='Item description...'
               />
             </div>
-            <div className="field has-addons">
-              <div className='control is-expanded'>
+            <div className="field">
+              <div className='control'>
                 <label className="label">Image</label>
                 <input
                   className='input'
@@ -163,19 +163,21 @@ export default function CreateProduct({ history, location }) {
                   name='image'
                   placeholder='Image url...'
                 />
-                <button type='button' onClick={() => showImgHelp(!imgHelp)}>Help</button>
               </div>
-              {imgHelp && <div className='modal is-active'>
-                <div className='modal-background'></div>
-                <div className='modal-content has-text-centered'>
-                  <p className='modal-text'>1. Go to the product page, and find the right picture</p>
-                  <p className='modal-text'>2. Right click on the product image (hold down click on mobile)</p>
-                  <p className='modal-text'>3. Click &quot;Copy image address&quot; to copy the link</p>
-                  <p className='modal-text'>4. Paste the link in the form!</p>
-                </div>
-                <button className='modal-close is-large' aria-label='close' onClick={() => showImgHelp(false)} />
-              </div>}
+              <div className="control">
+                <button className='button' onClick={() => showImgHelp(!imgHelp)}>Help</button>
+              </div>
             </div>
+            {imgHelp && <div className='modal is-active'>
+              <div className='modal-background'></div>
+              <div className='modal-content has-text-centered'>
+                <p className='modal-text'>1. Go to the product page, and find the right picture</p>
+                <p className='modal-text'>2. Right click on the product image (hold down click on mobile)</p>
+                <p className='modal-text'>3. Click &quot;Copy image address&quot; to copy the link</p>
+                <p className='modal-text'>4. Paste the link in the form!</p>
+              </div>
+              <button className='modal-close is-large' aria-label='close' onClick={() => showImgHelp(false)} />
+            </div>}
             <img width='100%' src={formData.image || null} />
             <div className="field">
               <label className="label">Seller</label>
