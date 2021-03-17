@@ -10,6 +10,8 @@ export default function UserProfile({ match }) {
   const [followConf, updateFollowConf] = useState('')
   const [followers, setFollowers] = useState([])
   const [isFollowing, setIsFollowing] = useState(false)
+  const [uploadSuccess, updateUploadSuccess] = useState(false)
+  const [newProfilePicture, getNewProfilePicture] = useState({})
 
   useEffect(() => {
     async function getProfileData() {
@@ -29,7 +31,7 @@ export default function UserProfile({ match }) {
       setOwnProfile(true)
     }
     getProfileData()
-  }, [isFollowing])
+  }, [isFollowing, uploadSuccess])
 
   useEffect(() => {
     for (let index = 0; index < followers.length; index++) {
@@ -68,6 +70,39 @@ export default function UserProfile({ match }) {
     setIsFollowing(!isFollowing)
   }
 
+  function handleUpload(event) {
+    event.preventDefault()
+    window.cloudinary.createUploadWidget(
+      {
+        cloudName: `${process.env.cloudName}`,
+        uploadPreset: `${process.env.uploadPreset}`,
+        cropping: true
+      },
+      (_err, result) => {
+        if (result.event !== 'success') {
+          return
+        }
+        getNewProfilePicture({
+          image: `${result.info.secure_url}`
+        })
+        updateUploadSuccess(true)
+      }
+    ).open()
+  }
+
+  useEffect(() => {
+    async function uploadPicture() {
+      await axios.put('/api/profile', newProfilePicture, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      updateUploadSuccess(false)
+    }
+    if (uploadSuccess === true) {
+      uploadPicture()
+    }
+  }, [uploadSuccess])
+
+
   return <main className='hero mr-6'>
     <section className="section is-small has-text-centered">
       <h2 className='title is-2'>{profile.username}</h2>
@@ -76,12 +111,14 @@ export default function UserProfile({ match }) {
       <div className='container'>
         <div className='columns is-centered is-mobile'>
           <div className='column is-two-thirds'>
-            <div id='list-box' className='mb-2'>
+            <div id='profile-box' className='mb-2'>
               <img id='profile-img' src={profile.image} alt={'Profile picture'} />
             </div>
           </div>
         </div>
       </div>
+      <button className="button m-4" onClick={handleUpload}>Change profile picture</button>
+      {uploadSuccess && <div><small className="has-text-primary">Upload Complete</small></div>}
       <div className='subtitle is-4'>Following: {profile.following ?
         profile.following.length
         :

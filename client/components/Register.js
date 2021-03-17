@@ -99,7 +99,7 @@ export default function Register({ history }) {
             />
           </div>
           <div className="control">
-            <button className='button'>Sumbit</button>
+            <button className='button'>Submit</button>
           </div>
           {registerErrors &&
             registerErrors === 'Account exists for this email, Login?' ?

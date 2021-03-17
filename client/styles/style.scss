@@ -25,12 +25,21 @@ $control-border-width: 1px;
 
 #profile-img {
   width: 100%;
-  height: auto;
+  display: block;
 }
 
 #explore-img {
   width: 500px;
   height: 500px; 
+}
+
+#profile-box {
+  border-width: 15px;
+  border-style: solid;
+  border-radius: 0;
+  overflow: hidden;
+  border-color: $black;
+  background-color: $cream;
 }
 
 #list-box {
