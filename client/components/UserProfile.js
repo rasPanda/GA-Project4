@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { getLoggedInUserId } from '../lib/auth'
-import profilePic from '../images/default_user_pic.png'
 
 export default function UserProfile({ match }) {
   const token = localStorage.getItem('token')
@@ -78,7 +77,7 @@ export default function UserProfile({ match }) {
         <div className='columns is-centered is-mobile'>
           <div className='column is-two-thirds'>
             <div id='list-box' className='mb-2'>
-              <img id='explore-img' src={profilePic} alt={'Profile picture'} />
+              <img id='profile-img' src={profile.image} alt={'Profile picture'} />
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getLoggedInUserId } from '../lib/auth'
-import logo from '../images/listing_logo_blue_bg.png'
+import logo from '../assets/listing_logo_blue_bg.png'
 
 export default function Navbar() {
   const userId = getLoggedInUserId()

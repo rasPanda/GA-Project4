@@ -1,5 +1,5 @@
 import React from 'react'
-import squares from '../images/listing_squares.png'
+import squares from '../assets/listing_squares.png'
 
 export default function Welcome() {
 

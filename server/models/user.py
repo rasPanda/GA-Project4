@@ -22,7 +22,7 @@ class User(db.Model, BaseModel):
     __tablename__ = 'users'
     username = db.Column(db.String(20), nullable=False, unique=True)
     email = db.Column(db.Text, nullable=False, unique=True)
-    image = db.Column(db.Text, nullable=False, default='images/default_user_pic.png')
+    image = db.Column(db.Text, nullable=False, default='https://www.clipartkey.com/mpngs/m/152-1520367_user-profile-default-image-png-clipart-png-download.png')
     role = db.Column(db.Enum('normal', 'admin', name='access_types'), default='normal')
     password_hash = db.Column(db.String(128), nullable=True)
 
