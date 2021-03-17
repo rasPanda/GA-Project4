@@ -33,6 +33,7 @@ export default function Login({ history }) {
       }
     } catch (err) {
       updateLoginErrors(true)
+      console.log(err.response)
     }
   }
 
