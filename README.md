@@ -71,3 +71,19 @@ Necessary deliverables are:
 
 ### Planning:
 
+The first step in planning was to map out the user story, and wireframe it out. This would serve as the foundation for the project and allowed me to build upon it.
+
+![UserStory](ReadMeImages/UserStoryWireframe.png)
+
+From there I was able to think more about and design the relational database, and the models & relationships required. This was also drawn out on a whiteboard to serve as a point of reference.
+
+![BackEnd](ReadMeImages/BackEndWhiteboard.png)
+
+Once both of these had been planned, I set out a list of major tasks/features that I wanted to aim for as an MVP, and as strech goals.
+
+![Checklist](ReadMeImages/Checklist.png)
+
+After the planning was complete, I opted to start with building the backend. This was due to the potential stumbling blocks I might encounter with the relationships. After which I would tackle the frontend client and styling.
+
+Initially, I planned to style the app myself without any CSS frameworks as I had used Bulma for the previous two projects and I wanted to challenge myself futher. However, I was unable to as I became very ill midway through the project, and to save time when I recovered I opted to use the framework in which I was very familiar with.
+
