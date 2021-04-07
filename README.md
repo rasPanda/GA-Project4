@@ -206,6 +206,31 @@ As the product was the side of the relationship which was "attached" or the "chi
 products = db.relationship('Products_Boards')
 ```
 
+### Authentication
+
+I created working authentication through the methods on the user model shown above. When creating a new user, the password hasher (password.setter) would (after validating password stregth) encode the users' password using bcrypt and store the hashed password on the user.
+
+Methods on the model such as validate_password are called to validate the users' password when logging in, again using bcrypt. Finally the method generate_token would create a JSON web token (jwt) by taking the user's ID into the payload, and returning a token assigned to that user only.
+
+The authenication methods can be seen on the below route on the user controller:
+
+```Python
+@router.route("/login", methods=["POST"])
+def login():
+    # look for user in database by filtering using email
+    user = User.query.filter_by(email=request.json['email']).first()
+    # if user does not exist, send appropriate message in response
+    if not user:
+        return { 'messages': 'No account found' }, 401
+    # if password is incorrect, send appropriate message in response
+    if not user.validate_password(request.json['password']):
+        return { 'messages': 'Incorrect password' }, 401
+    # if user exists and password matches, then generate jwt and send back in response
+    token = user.generate_token()
+    return { 'token': token, 'messages': f'Welcome back {user.username}!' }
+```
+The jwt would then be store in the browsers' local storage by the client. This is of course not the most secure method, and could be improved by using e.g. session-based cookies.
+
 ### Controllers, Middleware and Serializers
 
 Controllers were relatively straightforward to create, most of which were a matter of providing all or one of a certain type of data with simple error handling, with ID's provided from the client. E.g. boards: 
@@ -274,3 +299,79 @@ def secure_route(func):
 ```
 
 Other middleware include a simple logger (used in development), and an error handler which translated and returned useful responses for the most common errors.
+
+Finally, a series of serializers of varying complexity were created using Marshmallow. These were important for the controllers as they created json objects which the controllers could read and also send as reponses.
+
+Some models needed different types of serializer as in some cases less columns were required to be sent in reponses, e.g. user: 
+
+```Python
+#larger UserSchema which populates all information inlc. relationships
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        load_instance = True
+        exclude = ('password_hash', 'role')
+        load_only = ('email, password')
+
+    password = fields.String(required=True)
+    boards = fields.Nested('BoardSchema', many=True)
+    following = fields.Nested('SimpleUserSchema', many=True)
+    followers = fields.Nested('SimpleUserSchema', many=True)
+    messages_sent = fields.Nested('MessageSchema', many=True)
+    messages_received = fields.Nested('MessageSchema', many=True)
+
+#smaller UserSchema which populates only IDs and usernames.
+class SimpleUserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        load_instance = True
+        exclude = ('password_hash', 'role', 'email', 'image')
+        load_only = ('email, password')
+```
+
+### Scraper
+
+A key part of my app was the feature which takes a website URL and is able to scrape data from the page. I really wanted to implement this feature as the UX would be quite clunky if all the data needed to be input by the user. 
+
+After some research, I found a light-weight Python library called Gazpacho (based on BeautifulSoup) which I opted to use. This library is able to fetch the HTML given a URL, and create "Soup". This Soup allows a developer to parse through the HTML, and also has several methods which one can use to navigate & search through the HTML.
+
+Using this library, I built the below program as a controller in my backend. The output of the program is a JSON object which is aligned with my Product model, which a user would need to create a new Product. The below example is only showing one field (product name).
+
+```Python
+@router.route("/scrape", methods=["GET"])
+def scrape():
+    # create soup from url provided in request
+    url = request.args.get('url')
+    html = get(url)
+    soup = Soup(html)
+    
+    # find product name tag in HTML meta data
+    name = (soup.find('meta', attrs={'property': "og:title"}, mode='first'))
+    # if name tag is found, then assign the tags content to the variable "name"
+    if name != None:
+        name = name.attrs['content']
+    # if nothing is found, then use the title of the page
+    else:
+        name = (soup.find('title', mode='first')).text
+
+    # the return statement below returns all variables in a JSON object
+    return {
+        # in case nothing is found in the scraper, an empty string is provided as the value of that key
+        "name": name if name != None else '',
+        "description": description if description != None else '',
+        "image": image if image != None else '',
+        "price": price if price != None else '',
+        "vendor": vendor if vendor != None else '',
+        "dest_url": url
+        }, 200
+```
+
+My scraper program is completely dependant on certain meta tags being present on the particular vendors' site, specifically Open Graph tags. The fall-back is to look for other tags with similar names. If a website is poorly tagged, then the scraper would only work for certain fields. However, this provides a good solution to improve the UX of my app, as I will cover later below!
+
+## The Frontend
+
+Once the backend had been set-up, seeded, and end-points were tested, I proceeded with creation of the frontend client built in React.
+
+As the main user story was determined during planning, I had a structure to follow when creating all required pages. 
+
+In addition, while I had created many different end-points on my backend, I 
