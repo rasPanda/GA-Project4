@@ -68,6 +68,7 @@ Necessary deliverables are:
 * SASS/SCSS
 * bcrypt
 * jsonwebtoken
+* Insomnia
 
 ### Planning:
 
@@ -85,13 +86,13 @@ Once both of these had been planned, I set out a list of major tasks/features th
 
 After the planning was complete, I opted to start with building the backend. This was due to the potential stumbling blocks I might encounter with the relationships, and I really wanted to accomplish some kind of scraper component. After that I would tackle the frontend client and styling.
 
-Initially, I planned to style the app myself without any CSS frameworks as I had used Bulma for the previous two projects and I wanted to challenge myself futher. However, I was unable to as I became very ill midway through the project, and to save time when I recovered I opted to use the framework in which I was very familiar with.
+Initially, I planned to style the app myself without any CSS frameworks as I had used Bulma for the previous two projects and I wanted to challenge myself futher. However, I was unable to as I became very ill midway through the project, and to save time when I recovered I opted to use the framework in which I was familiar with.
 
 ## The Backend
 
 Having rigourously planned the backend, I could follow the stucture while building it. 
 
-I started with the models & relationships, and then in order to start testing the models I build controllers and serialisers in order to access the models for testing.
+I started with the models & relationships, and then in order to start testing the backend endpoints using Insomnia I built controllers and serialisers in order to access the models.
 
 ### Models & Relationships
 
@@ -374,4 +375,12 @@ Once the backend had been set-up, seeded, and end-points were tested, I proceede
 
 As the main user story was determined during planning, I had a structure to follow when creating all required pages. 
 
-In addition, while I had created many different end-points on my backend, I 
+In addition, while I had created many different end-points on my backend, I focussed on only connecting to those required as I worked through the different pages and sections of the app.
+
+### Login/Register
+
+
+
+...
+
+MORE TO COME!
