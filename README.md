@@ -2,7 +2,7 @@
 
 ### General Assembly Software Engineering Immersive
 
-#Project 4: Listing
+# Project 4: Listing
 
 ![Homepage](ReadMeImages/WelcomePage.png)
 
@@ -491,7 +491,56 @@ Similarly to the router, the Navbar rendering is controlled dependent on whether
 
 The login and register pages are quite similar, in that the pages are rendered as simple forms which accept user input.
 
-The login page takes a users' email and password, which are used to send a login request to the backend. The users' input is stored in a state variable, and once the form is submitted the below function manages the request along with catching login errors:
+The register page takes the required data to send a request to create a new user row in the the database table.
+
+![RegisterPage](ReadMeImages/RegisterPage.png)
+
+For this form, the users' input is stored as an object within in a state variable. Once the form gets submitted, this object is used to send a register user request to the backend using the below function:
+
+```Javascript
+  async function handleRegisterSubmit(event) {
+    event.preventDefault()
+    // clear any error messages from rendering
+    updateRegisterErrors('')
+    // check if passwords match, if not display appropriate message
+    if (registerData.password !== registerData.passwordConfirmation) {
+      updateRegisterErrors('Passwords do not match')
+      return
+    }
+    // create new request body, removing password confirmation (not required)
+    try {
+      const dataToSend = {
+        username: registerData.username,
+        email: registerData.email,
+        password: registerData.password
+      }
+      // send register request, if successful render success message
+      await axios.post('/api/register', dataToSend)
+      updateRegistrationSuccess(true)
+    } catch (err) {
+      // catch any errors for rendering on page
+      updateRegisterErrors(err.response.data.messages)
+    }
+  }
+```
+
+If a user registration is successul, then the below useEffect pushes the user to the login page after a short delay:
+
+```Javascript
+  useEffect(() => {
+    if (registrationSuccess === true) {
+      setTimeout(() => {
+        history.push('/login')
+      }, 1500)
+    }
+  }, [registrationSuccess])
+```
+
+The login page takes a users' email and password, which are used to send a login request to the backend. 
+
+![LoginPage](ReadMeImages/LoginPage.png)
+
+This form is slightly more simple compared to the Register page. The users' input is stored in a state variable, and once the form is submitted the below function manages the request along with catching login errors:
 
 
 ```Javascript
@@ -522,6 +571,17 @@ The login page takes a users' email and password, which are used to send a login
     }
   }
 ```
+
+Welcome/error messages get rendered under the form using the different state variables, which get updated within the handleSubmit function:
+
+```Javascript
+{loginSuccess && <div className="help">{welcome}</div>}
+{loginErrors && <div className="help">Incorrect Login Details, Please Try Again</div>}
+```
+
+### Homepage 
+
+Once a user is logged in, the main site would be made available to them. The homepage 
 
 ...
 
