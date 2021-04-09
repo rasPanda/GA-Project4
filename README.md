@@ -232,6 +232,33 @@ def login():
 ```
 The jwt would then be store in the browsers' local storage by the client. This is of course not the most secure method, and could be improved by using e.g. session-based cookies.
 
+Finally, I was able to check if a user was logged in, and what their user ID is, within the client using the below function:
+
+```Javascript
+export function getLoggedInUserId() {
+  // If no local storage, return false
+  if (!localStorage) return false
+  // Retrieve token
+  const token = localStorage.getItem('token')
+  // ! If no token, return false
+  if (!token) return false
+  // ! Extract payload from token, and convert into JSON object
+  const payloadAsString = atob(token.split('.')[1])
+  const payloadAsObject = JSON.parse(payloadAsString)
+  // ! Return user ID within JSON object
+  return payloadAsObject.sub
+}
+```
+
+There is a second function which also quickly checks if the logged in user ID matches the user ID something on the page:
+
+```Javascript
+export function isCreator(userIdToCompare) {
+  if (!userIdToCompare) return false
+  return userIdToCompare === getLoggedInUserId()
+}
+```
+
 ### Controllers, Middleware and Serializers
 
 Controllers were relatively straightforward to create, most of which were a matter of providing all or one of a certain type of data with simple error handling, with ID's provided from the client. E.g. boards: 
@@ -377,9 +404,124 @@ As the main user story was determined during planning, I had a structure to foll
 
 In addition, while I had created many different end-points on my backend, I focussed on only connecting to those required as I worked through the different pages and sections of the app.
 
+The frontend was all built using modern React, with functional components for each page. Each of these components was controlled using BrowserRouter in the main App.js file, which gets inserted into my HTML via the index.js file.
+
+
+### Controlling access to web-app
+
+The start of the user journey is a welcome page, with a custom-made graphic on a mimalistically designed welcome page.
+
+![WelcomePage](ReadMeImages/WelcomePage.png)
+
+This view is shown to any user who is not logged in (determined by using the auth functions), which is controlled in the router:
+
+```Javascript
+// Main app component
+const App = () => (
+  // BrowserRouter init
+  <BrowserRouter>
+    // Navbar gets rendered irrespective of login status
+    <Navbar />
+    // If user is not logged in, grant access to welcome journey
+    {!getLoggedInUserId() ?
+      <Switch>
+        <Route exact path="/" component={Welcome} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+      </Switch>
+      :
+      // If user is logged in, grant access to all other pages
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route exact path="/board/create" component={CreateBoard} />
+        <Route exact path="/board/:id" component={Board} />
+        <Route exact path="/product/create" component={CreateProduct} />
+        <Route exact path="/product/:id" component={Product} />
+        <Route exact path="/profile/user" component={UserProfile} />
+        <Route exact path="/profile/:id" component={UserProfile} />
+        <Route exact path="/explore" component={Explore} />
+        <Route exact path="/messages" component={Messages} />
+      </Switch>
+    }
+    // Footer also gets rendered irrespective of login status
+    <Footer />
+  </BrowserRouter>
+```
+
+### Navbar
+
+Key to the welcome experience is the Navbar, which also changes dependent on the users' login status 
+(left = logged out // right = logged out):
+
+![LoggedOutNavbar](ReadMeImages/LoggedOutNavbar.png)
+![LoggedInNavbar](ReadMeImages/LoggedInNavbar.png)
+
+Similarly to the router, the Navbar rendering is controlled dependent on whether the user is authenticated:
+
+```Javascript
+  // Attempt to retrieve user ID
+  const userId = getLoggedInUserId()
+  
+  
+  return <nav className="level mb-0 is-mobile">
+    <div className='level-left pl-3'>
+      // If no user ID found, render logged out experience
+      {!userId ?
+        <div className="container">
+          <Link to={'/login'} className='level-item'>Log in</Link>
+          <Link to={'/register'} className='level-item'>Register</Link>
+        </div>
+        :
+        // If user ID found, render logged in experience
+        <div className="container">
+          <Link to={'/'} className='level-item'>HOME</Link>
+          <Link to={'/explore'} className='level-item'>Explore</Link>
+          <Link to={`/profile/${userId}`} className='level-item'>Profile</Link>
+          <Link to={'/'} onClick={() => setLogout(true)} className='level-item'>Log out</Link>
+        </div>
+      }
+    </div>
+    <div className='level-right pr-3'>
+      <img id='nav-logo' src={logo} alt='Listing logo' />
+    </div>
+  </nav>
+```
+
 ### Login/Register
 
+The login and register pages are quite similar, in that the pages are rendered as simple forms which accept user input.
 
+The login page takes a users' email and password, which are used to send a login request to the backend. The users' input is stored in a state variable, and once the form is submitted the below function manages the request along with catching login errors:
+
+
+```Javascript
+  async function handleLoginSubmit(event) {
+    event.preventDefault()
+    // Set login errors state to false to remove error message rendering
+    updateLoginErrors(false)
+    // try to send a request using the users' input
+    try {
+      const { data } = await axios.post('/api/login', loginData)
+      // extract welcome message from response
+      getWelcome(data.messages)
+      // extract jwt from response and set it in local storage
+      if (!localStorage.token) {
+        localStorage.setItem('token', data.token)
+        // render welcome message
+        updateLoginSuccess(true)
+        // after short delay, re-render page to show logged in experience
+        setTimeout(() => {
+          history.push('/')
+          window.location.reload()
+        }, 1500)
+      }
+    } catch (err) {
+      // update login errors if any errors are caught
+      updateLoginErrors(true)
+      console.log(err.response)
+    }
+  }
+```
 
 ...
 
