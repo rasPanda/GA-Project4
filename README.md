@@ -644,6 +644,81 @@ Once a user clicks into one of their lists, they are presented with a vertically
 
 Each item square contains information (price, vendor, purchased status), and is clickable to go to the item page (specific instance of that item on that particular board). 
 
+All items will be rendered, and the user can continue scrolling down to view all of their items on the list.
+
+If there are no items on the list (e.g. when the list is completely new), some simple text is rendered to state this:
+
+```Javascript
+// If the data has been fetched (loading state = false) and the number of items on the list is falsy
+if (!loading && !Object.keys(board.products).length) {
+  [...]
+  <div className='hero-body title is-5'>nothing here!</div>
+```
+
+Importantly, due to how the serializers are nested in the backend, I am able to pull the "purchased" status through with the lists as one single request:
+
+```Python
+# Board (List) schema, where I pull through items which are linked to the list (using Marshmallow fields) 
+class BoardSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Board
+        load_instance = True
+
+    products = fields.Nested('ProductBoardSchema', many=True)
+    
+# ListItem schema, fetching the data from the join table (including the "purchased" status boolean
+class ProductBoardSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Products_Boards
+        load_instance = True
+
+    product = fields.Nested('SimpleProductSchema')
+    
+# Simple item schema, which ensures the product information fields are added
+class SimpleProductSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Product
+        load_instance = True
+```
+
+### Item page
+
+The item pages display all information on the specific item + list instance. 
+
+![ItemPage1](ReadMeImages/ItemPage1.png)
+![ItemPage2](ReadMeImages/ItemPage2.png)
+
+In addition, there is a comments section at the bottom of the page. These comments are shared on this item, irrespective of which list it appears on.
+
+When the "Add comment" button is pressed, an input field appears which takes the input and creates a new comment by sending a post request with the relavent IDs. It then re-renders the page to show the new comment.
+
+![CommentFieldActive](ReadMeImages/CommentFieldActive.png)
+
+Most interestingly from a UX perspective, is the process of marking the item as purchased.
+
+When the item has a True value for purchased, then the button under the image renders as above. However when the item has a purchased value of False, then there are two buttons instead:
+
+![PurchasedButtons](ReadMeImages/PurchasedButtons.png)
+
+Clicking on the left button opens a new tab in the users' browser, which directs to the product page on the vendor website. The idea is to allow the user to go purchase the item on a separate tab when they are ready.
+
+![VendorSite](ReadMeImages/VendorSite.png)
+
+It also renders a full screen modal on listing, which prompts the user (on their return to the page) whether they purchased the item or not.
+
+![PurchasedModal](ReadMeImages/PurchasedModal.png)
+
+If the user clicks "No" or closes the modal, nothing happens. If the user clicks "yes" then the product is marked as purchased.
+
+All of this is managed in React using state variables which are dependant on what is received in the response when fetching the list data. For example, the purchase buttons get rendered depending on the truthy/falsy values of the below state variables:
+
+```Javascript
+{(boardId && !purchased) && <button className='button m-1' onClick={() => goToWebsite()}>Go to website</button>}
+{(boardId && !purchased) && <button className='button m-1' onClick={() => markAsPurchased()}>Mark as purchased</button>}
+{(boardId && purchased) && <button className='button m-1' onClick={() => markAsPurchased()}>Unmark as purchased</button>}
+```
+
+
 ...
 
 MORE TO COME!
