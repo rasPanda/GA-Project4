@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-export default function Product({ match, location,history }) {
+export default function Product({ match, location, history }) {
   const token = localStorage.getItem('token')
   const productId = match.params.id
   const [boardId, getBoardId] = useState('')

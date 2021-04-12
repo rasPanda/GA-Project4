@@ -88,6 +88,8 @@ After the planning was complete, I opted to start with building the backend. Thi
 
 Initially, I planned to style the app myself without any CSS frameworks as I had used Bulma for the previous two projects and I wanted to challenge myself futher. However, I was unable to as I became very ill midway through the project, and to save time when I recovered I opted to use the framework in which I was familiar with.
 
+<b>NOTE:</b> Throughout the project, I've used two different names in the backend vs. the frontend for lists and items. On the frontend these specific names were used, however on the backend I used the names "boards" and "products" respectively. This was due to during planning, I used the backend names, however when designing the frontend I wanted to use names more aligned with the branding and so the names were changed.
+
 ## The Backend
 
 Having rigourously planned the backend, I could follow the stucture while building it. 
@@ -581,7 +583,66 @@ Welcome/error messages get rendered under the form using the different state var
 
 ### Homepage 
 
-Once a user is logged in, the main site would be made available to them. The homepage 
+Once a user is logged in, the main site would be made available to them. Now, the component that is assigned to the homepage ("/") shows all of the logged in users' lists (clickable to the list itself) with a link at the top of the page that take's the user to the create list page.
+
+![Homepage](ReadMeImages/Homepage.png)
+
+Each list is represented by an individual square, with the name of the list above it. Within the square, images of the first four products are shown. If the list has less than 4 products, a blank gif is displayed instead, so as to maintain the structure of the squares.
+
+```Javascript
+<div className='columns is-multiline is-mobile'>
+  // Using fetched lists (boards) data, create array of 4 product images for each list
+  {boards.map((board) => {
+    const productImages = board.products.map((product) => {
+      return product.product.image
+    })
+    // Also, render each list which links to the list pages 
+    return <Link className='column is-half-desktop is-half-tablet is-full-mobile' key={board.id} to={`/board/${board.id}`}>
+      <article className='card' id='list-box-header'>
+        <h4 className='title is-3 is-size-5-mobile is-centered'>{board.name}</h4>
+        <div id='list-box' className='media-content'>
+          <div>
+            // For each image, if there is no product image, show blankGif
+            <img id='list-img' src={productImages[0] || blankGif} />
+            <img id='list-img' src={productImages[1] || blankGif} />
+          </div>
+          <div className='media-content'>
+            <img id='list-img' src={productImages[2] || blankGif} />
+            <img id='list-img' src={productImages[3] || blankGif} />
+          </div>
+        </div>
+      </article>
+    </Link>
+  })
+  }
+</div>
+```
+
+### Create list page
+
+This page is very simple, as it contains a form with one input for the name of the list. This input gets used to send a request to create a new list for the user, and then the user gets routed back to the homepage.
+
+![CreateListPage](ReadMeImages/CreateListPage.png)
+
+One call out on this page, is that there is there is some validation here on the list name length:
+
+```Javascript
+if (boardName.length > 20) {
+  updateErrors('Name too long!')
+  return
+}
+```
+
+This was a design decision, as names longer than 20 characters would disrupt the layout of the homepage.
+
+### List page
+
+Once a user clicks into one of their lists, they are presented with a vertically rendered list of the individual items (products) in their list. There is also a link at the top of the page which takes the user to the add-item-to-list journey.
+
+![ListPage1](ReadMeImages/ListPage1.png)
+![ListPage2](ReadMeImages/ListPage2.png)
+
+Each item square contains information (price, vendor, purchased status), and is clickable to go to the item page (specific instance of that item on that particular board). 
 
 ...
 
