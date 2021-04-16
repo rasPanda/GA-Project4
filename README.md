@@ -618,7 +618,7 @@ Each list is represented by an individual square, with the name of the list abov
 </div>
 ```
 
-### Create list page
+### Create List page
 
 This page is very simple, as it contains a form with one input for the name of the list. This input gets used to send a request to create a new list for the user, and then the user gets routed back to the homepage.
 
@@ -718,6 +718,56 @@ All of this is managed in React using state variables which are dependant on wha
 {(boardId && purchased) && <button className='button m-1' onClick={() => markAsPurchased()}>Unmark as purchased</button>}
 ```
 
+### Create Item journey
+
+This journey was one of the most rewarding to build, as it involves using the scraper I built in the backend, as well as giving me lots of opportunity to consider the UX of the flow.
+
+This journey starts when the user clicks the "Add product to this list" link at the top of the list page.
+
+![ListPage1](ReadMeImages/ListPage1.png)
+
+This brings up the the start of the journey, which is a simple form which prompts the user to provide a URL as the input.
+
+![AddProduct1](ReadMeImages/AddProduct1.png)
+
+Once submitted, the input URL gets sent as a request through the scraper in the backend, which will send a JSON object as the response. This JSON object then is used to populate the form in the next stage in the journey as per below (depending on what data get retrieved):
+
+![ProductForm1](ReadMeImages/ProductForm1.png)
+![ProductForm2](ReadMeImages/ProductForm2.png)
+
+There is an UX consideration here: If the user provides a URL which the scraper is unable to provide a response for, the user will be informed:
+
+![NoResponse1](ReadMeImages/NoResponse1.png)
+
+If this occurs three times, a button will get rendered which allows the user to skip the scraper step, and will proceed to the next form without getting it pre-filled with any data.
+
+![NoResponse2](ReadMeImages/NoResponse2.png)
+
+I accomplished this in the client by using a counter variable in the catch of the handleScraperSubmit function, which increments each time the submit button is clicked:
+
+```Javascript
+} catch (err) {
+  updateScrapeError('No response. Please check the URL and try again!')
+  setCounter(counter + 1)
+}
+``` 
+
+When the counter is equal to three the skip button gets rendered, which changes the rendering of the page:
+
+```Javascript
+{counter >= 3 && <div>
+  <div>Having trouble?</div>
+  <button className='button' onClick={() => runScraper(true)}>Skip this step</button>
+</div>}
+```
+
+On this view, the user is able to review and edit/complete the details in the form before submitting. Once the user submits the form, the form data gets sent as a post request to the backend in order to add the item to the database, as well as sending a request to add that item to the users' list automatically. 
+
+The user then gets redirected to their list, and the item gets rendered at the bottom of the list:
+
+![ProductOnList](ReadMeImages/ProductOnList.png)
+
+There is an additional UX consideration here, where if the item already exists in the database the form step of the journey is skipped completely. The existing item then gets added to the users list as per the journey above.
 
 ...
 
