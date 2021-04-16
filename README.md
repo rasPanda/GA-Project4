@@ -735,6 +735,8 @@ Once submitted, the input URL gets sent as a request through the scraper in the 
 ![ProductForm1](ReadMeImages/ProductForm1.png)
 ![ProductForm2](ReadMeImages/ProductForm2.png)
 
+(enter code here)
+
 There is an UX consideration here: If the user provides a URL which the scraper is unable to provide a response for, the user will be informed:
 
 ![NoResponse1](ReadMeImages/NoResponse1.png)
@@ -761,13 +763,23 @@ When the counter is equal to three the skip button gets rendered, which changes 
 </div>}
 ```
 
-On this view, the user is able to review and edit/complete the details in the form before submitting. Once the user submits the form, the form data gets sent as a post request to the backend in order to add the item to the database, as well as sending a request to add that item to the users' list automatically. 
+On the final stage of the journey, the user is able to review and edit/complete the details in the form before submitting. Once the user submits the form, the form data gets sent as a post request to the backend in order to add the item to the database, as well as sending a request to add that item to the users' list automatically. 
 
 The user then gets redirected to their list, and the item gets rendered at the bottom of the list:
 
 ![ProductOnList](ReadMeImages/ProductOnList.png)
 
 There is an additional UX consideration here, where if the item already exists in the database the form step of the journey is skipped completely. The existing item then gets added to the users list as per the journey above.
+
+This is completed by performing a fetch request to check if the item exist, with the handleScraperSubmit function. Unless a 'No duplicate' message is received in the response, a message will render to the user in the client, and the item is added to the list.
+
+```Javascript
+const search = await axios.get(`/api/product/search?url=${scraperUrl}`)
+if (search.data.messages !== 'No duplicate') {
+  updateScrapeError('Product found!')
+  addProductToBoard(search.data.id)
+  return
+```
 
 ...
 
