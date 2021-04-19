@@ -117,7 +117,7 @@ export default function UserProfile({ match }) {
           </div>
         </div>
       </div>
-      <button className="button m-4" onClick={handleUpload}>Change profile picture</button>
+      {ownProfile && <button className="button m-4" onClick={handleUpload}>Change profile picture</button>}
       {uploadSuccess && <div><small className="has-text-primary">Upload Complete</small></div>}
       <div className='subtitle is-4'>Following: {profile.following ?
         profile.following.length

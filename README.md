@@ -735,13 +735,24 @@ Once submitted, the input URL gets sent as a request through the scraper in the 
 ![ProductForm1](ReadMeImages/ProductForm1.png)
 ![ProductForm2](ReadMeImages/ProductForm2.png)
 
-(enter code here)
+```Javascript
+// Part of the handleScraperSubmit function, where the scrape request is sent
+try {
+  await axios.get(`/api/scrape?url=${scraperUrl}`)
+    .then(res => {
+      setCounter(0)
+      runScraper(true)
+      updateFormData(res.data)
+    })
+```
 
-There is an UX consideration here: If the user provides a URL which the scraper is unable to provide a response for, the user will be informed:
+The runScraper state set to true changes what section of the page gets rendered, having it set to false shows the form with the URL input field (scraper has not run), whereas true shows the next step (scraper has run or is skipped).
+
+There is an UX consideration here also: If the user provides a URL which the scraper is unable to provide a response for, the user will be informed:
 
 ![NoResponse1](ReadMeImages/NoResponse1.png)
 
-If this occurs three times, a button will get rendered which allows the user to skip the scraper step, and will proceed to the next form without getting it pre-filled with any data.
+If this occurs three times, a button will get rendered which allows the user to skip the scraper step (set runScraper = true), and will proceed to the next form without getting it pre-filled with any data.
 
 ![NoResponse2](ReadMeImages/NoResponse2.png)
 
@@ -763,7 +774,7 @@ When the counter is equal to three the skip button gets rendered, which changes 
 </div>}
 ```
 
-On the final stage of the journey, the user is able to review and edit/complete the details in the form before submitting. Once the user submits the form, the form data gets sent as a post request to the backend in order to add the item to the database, as well as sending a request to add that item to the users' list automatically. 
+On the final stage of the journey (runScraper = true), the user is able to review and edit/complete the details in the form before submitting. Once the user submits the form, the form data gets sent as a post request to the backend in order to add the item to the database, as well as sending a request to add that item to the users' list automatically. 
 
 The user then gets redirected to their list, and the item gets rendered at the bottom of the list:
 
@@ -780,6 +791,57 @@ if (search.data.messages !== 'No duplicate') {
   addProductToBoard(search.data.id)
   return
 ```
+
+### Explore
+
+The explore page is a simple page which displays all items in the database. This page renders similarly to the users' list page. Except each square displays an item.
+
+![Explore](ReadMeImages/Explore.png)
+
+If a user clicks through to an item from the Explore page, they will still be able to add the product to one of their lists. This UX consideration was required for the Explore page to be made live, so this was my main priority when working on this page.
+
+The buttons under the item image which the user can use to mark as purchsed, or open the product page, are instead replaced by another button, which opens a modal with all the users' lists which the user can click to add the item directly to a list.
+
+![ExploreItemButton](ReadMeImages/ExploreItemButton.png)
+![ExploreItemModal](ReadMeImages/ExploreItemModal.png)
+
+I accomplished this by having a piece of state which would pull the lists' boardId from the router URL. In the case of the Explore page, no boardId would get pulled. This allowed me to set a different view (vs. the purchased buttons) to get rendered on the product page when this occurs:
+
+```Javascript
+// If boardId is falsy, render this view:
+// Show button "add item to a list"
+{!boardId && <button className='button m-1' onClick={() => showModal(!modal)}>Add to a list</button>}
+// once button is clicked, modal is rendered
+{modal && <div className='modal is-active'>
+<div className='modal-background'></div>
+<div className='modal-content has-text-centered'>
+  <p className='modal-text title is-4'>Select list to add to</p>
+  // modal displays each of the users' lists, if the user clicks one, the item gets added to that board
+  {userBoards.map((board) => {
+    return <div key={board.id} className='modal-link' onClick={() => addProductToBoard(board.id)}>{board.name}</div>
+  })}
+</div>
+<button className='modal-close is-large' aria-label='close' onClick={() => showModal(false)} />
+</div>}
+```
+
+### Profile & Messaging pages
+
+These pages were stretch goals, and due to a lack of time are unfortunately unfinished.
+
+The profile page is usable, so I decided to have it accessible. Here, a user can change their profile picture and see their followers/following numbers:
+
+![UserProfile](ReadMeImages/UserProfile.png)
+
+I used the cloudinary widget to give the user the functionality to change their profile picture. 
+
+If the user navigates to another users' page (either through Explore, or from a item comment), then they can follow that user:
+
+
+
+## Challenges & Wins
+
+## Future features
 
 ...
 
