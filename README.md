@@ -825,9 +825,9 @@ I accomplished this by having a piece of state which would pull the lists' board
 </div>}
 ```
 
-### Profile & Messaging pages
+### Profile pages
 
-These pages were stretch goals, and due to a lack of time are unfortunately unfinished.
+This page was one of my later stretch goals, and due to a lack of time the features are limited and could be built upon.
 
 The profile page is usable, so I decided to have it accessible. Here, a user can change their profile picture and see their followers/following numbers:
 
@@ -835,14 +835,34 @@ The profile page is usable, so I decided to have it accessible. Here, a user can
 
 I used the cloudinary widget to give the user the functionality to change their profile picture. 
 
-If the user navigates to another users' page (either through Explore, or from a item comment), then they can follow that user:
+If the user navigates to another users' page (either through Explore, or from a item comment), then they can also follow/unfollow that user:
 
+![Follow](ReadMeImages/Follow.png)
+![Unfollow](ReadMeImages/Unfollow.png)
 
 
 ## Challenges & Wins
 
+Having completed the main functionality of the app was a big win, where a user can create lists to organise items for purchase, was the main purpose of the project. To have completed this was a big win for me.
+
+In addition, having chosen to work on this as a solo project, completing the project together with a few stretch goals was a huge win!
+
+In terms of the stretch goals, the scraper was the main priority to complete, and while there are bugs the scraper still serves a purpose and the UX is not absolutely terrible if the scraper is unable to pull the correct information. In addition, it was a great learning experience, and I was able to teach myself a wide range of topics including a new Python library (Gaszpacho), the concept of creating "soup", metatags, general HTML scraping, and of course more Python!
+
+Finally, while I did want to avoid using any CSS frameworks, I did create a good looking app with consistent branding, which is also mobile-first!
+
 ## Future features
 
-...
+The majority of the additional features I can identify are around the social media aspects of the app, as these parts of the app were not the priority.
 
-MORE TO COME!
+###1. Messaging
+This was something that I had built the backend framework for, so all the relationships and models should be in place to accomplish a messaging feature. The key for this would be to figure out the design, and how to pull the right data (e.g. messages sent from specific users + messages sent to just one user) for rendering purposes.
+
+###2. Improving the scraper
+Currently, the scraper is very dependant on OG metatags, and other data to be present in the header of the HTML. There could be further depth to the scraper to work with other header data, and even potentially scraping the body of HTML to retrieve data.
+
+###3. Followers list & items views
+As there is a follwers/following functionality, it would be great to have some sort of use other than simply tallying the numbers. One potential feature could be to view the lists and/or items of other users users which you follow, in a collated view.
+
+###4. Tailored & paginated Explore page
+Once the number of items in the database grows, the Explore page would need to be paginated to avoid too much to be rendered at once. In addition, some sort of sorting rules or algorithm would need to be designed in order to show items which the user would be more likely to be interested in. For example, items could be classfied by type or style, and those items could be shown first. In addition, the follower data could be incorporated to help sorting the items.
